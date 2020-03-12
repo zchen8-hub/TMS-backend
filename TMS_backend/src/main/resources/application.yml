@@ -1,8 +1,0 @@
-Spring:
-  datasource:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://35.175.149.229:3306/testDB
-    username: georgey
-    password: 123456
-
-
