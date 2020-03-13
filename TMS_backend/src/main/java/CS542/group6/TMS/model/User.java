@@ -13,10 +13,10 @@ public class User {
     private final UUID uid;
     @Column(name = "user_name",nullable = false)
     private String username;
-    private String email;
-    private String phone;
     @Column(name = "pwd",nullable = false)
     private String password;
+    private String email;
+    private String phone;
 
     public User( UUID uid, String username, String email, String phone, String password) {
         this.uid = uid;
