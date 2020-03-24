@@ -17,7 +17,7 @@ public class User {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     @Column(name = "user_id", updatable = false, nullable = false)
-    private UUID uid;
+    private String uid;
 
     @Column(name = "user_name", nullable = false)
     private String username;
@@ -31,9 +31,11 @@ public class User {
     @Column(nullable = false)
     private String phone;
 
-    public User(){}
+    public User(){
 
-    public User(UUID uid, String username, String password, String email, String phone) {
+    }
+
+    public User(String uid, String username, String password, String email, String phone) {
         this.uid = uid;
         this.username = username;
         this.password = password;
@@ -41,7 +43,7 @@ public class User {
         this.phone = phone;
     }
 
-    public UUID getUid() {
+    public String getUid() {
         return uid;
     }
 
