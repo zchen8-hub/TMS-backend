@@ -4,6 +4,10 @@ import CS542.group6.TMS.model.User;
 import com.google.common.base.Converter;
 import org.springframework.beans.BeanUtils;
 
+/**
+ * DTO: Data Transfer Object,
+ * In this project, it is used for data transmission between front-end and back-end.
+ */
 public class UserDTO {
     private String username;
     private String password;
@@ -42,6 +46,10 @@ public class UserDTO {
         this.phone = phone;
     }
 
+    /**
+     * Convert DTO to PO (Persistence object, completely match parameters of user table )
+     * @return PO
+     */
     public User convertToUser(){
         UserDTOConvert userDTOConvert = new UserDTOConvert();
         return userDTOConvert.convert(this);
