@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4261d5af-aef0-481a-a303-6f4802625732" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/CS542/group6/TMS/api/CommentContoller.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/CS542/group6/TMS/api/GroupController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/CS542/group6/TMS/api/ProjectController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/CS542/group6/TMS/api/TagController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/CS542/group6/TMS/api/TransactionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/CS542/group6/TMS/api/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CS542/group6/TMS/api/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/CS542/group6/TMS/model/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CS542/group6/TMS/model/Comment.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1Yv30vLcW4qmqCzrwGP3xYUR4WO" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RunManager">
+    <configuration name="TmsApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="CS542.group6.TMS.TmsApplication" />
+      <module name="TMS" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="CS542.group6.TMS.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.TmsApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4261d5af-aef0-481a-a303-6f4802625732" name="Default Changelist" comment="" />
+      <created>1583809021275</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1583809021275</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="709" y="232" key="#com.intellij.ide.util.MemberChooser" timestamp="1584045222264">
+      <screen x="0" y="23" width="1680" height="971" />
+    </state>
+    <state x="709" y="232" key="#com.intellij.ide.util.MemberChooser/0.23.1680.971@0.23.1680.971" timestamp="1584045222264" />
+    <state x="709" y="232" key="#com.intellij.ide.util.MemberChooser/0.23.1680.973@0.23.1680.973" timestamp="1583816973447" />
+    <state x="602" y="375" width="451" height="276" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1584051891139">
+      <screen x="0" y="23" width="1680" height="971" />
+    </state>
+    <state x="602" y="375" width="451" height="276" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.23.1680.971@0.23.1680.971" timestamp="1584051891139" />
+    <state x="608" y="271" key="DBNavigator.ProjectSettingsDialog" timestamp="1584050421580">
+      <screen x="0" y="23" width="1680" height="971" />
+    </state>
+    <state x="608" y="271" key="DBNavigator.ProjectSettingsDialog/0.23.1680.971@0.23.1680.971" timestamp="1584050421580" />
+    <state width="1358" height="442" key="GridCell.Tab.0.bottom" timestamp="1584052929737">
+      <screen x="0" y="23" width="1680" height="971" />
+    </state>
+    <state width="1358" height="442" key="GridCell.Tab.0.bottom/0.23.1680.971@0.23.1680.971" timestamp="1584052929737" />
+    <state width="1358" height="262" key="GridCell.Tab.0.bottom/0.23.1680.973@0.23.1680.973" timestamp="1583818095936" />
+    <state width="1358" height="442" key="GridCell.Tab.0.center" timestamp="1584052929736">
+      <screen x="0" y="23" width="1680" height="971" />
+    </state>
+    <state width="1358" height="442" key="GridCell.Tab.0.center/0.23.1680.971@0.23.1680.971" timestamp="1584052929736" />
+    <state width="1358" height="262" key="GridCell.Tab.0.center/0.23.1680.973@0.23.1680.973" timestamp="1583818095935" />
+    <state width="1358" height="442" key="GridCell.Tab.0.left" timestamp="1584052929735">
+      <screen x="0" y="23" width="1680" height="971" />
+    </state>
+    <state width="1358" height="442" key="GridCell.Tab.0.left/0.23.1680.971@0.23.1680.971" timestamp="1584052929735" />
+    <state width="1358" height="262" key="GridCell.Tab.0.left/0.23.1680.973@0.23.1680.973" timestamp="1583818095935" />
+    <state width="1358" height="442" key="GridCell.Tab.0.right" timestamp="1584052929736">
+      <screen x="0" y="23" width="1680" height="971" />
+    </state>
+    <state width="1358" height="442" key="GridCell.Tab.0.right/0.23.1680.971@0.23.1680.971" timestamp="1584052929736" />
+    <state width="1358" height="262" key="GridCell.Tab.0.right/0.23.1680.973@0.23.1680.973" timestamp="1583818095935" />
+    <state x="434" y="171" key="Maven.ArtifactSearchDialog" timestamp="1584051357511">
+      <screen x="0" y="23" width="1680" height="971" />
+    </state>
+    <state x="434" y="171" key="Maven.ArtifactSearchDialog/0.23.1680.971@0.23.1680.971" timestamp="1584051357511" />
+    <state x="434" y="171" key="Maven.ArtifactSearchDialog/0.23.1680.973@0.23.1680.973" timestamp="1583819037690" />
+    <state x="450" y="147" key="SettingsEditor" timestamp="1584043212089">
+      <screen x="0" y="23" width="1680" height="971" />
+    </state>
+    <state x="450" y="147" key="SettingsEditor/0.23.1680.971@0.23.1680.971" timestamp="1584043212089" />
+    <state x="575" y="341" key="com.intellij.ide.util.TipDialog" timestamp="1584043229300">
+      <screen x="0" y="23" width="1680" height="971" />
+    </state>
+    <state x="575" y="341" key="com.intellij.ide.util.TipDialog/0.23.1680.971@0.23.1680.971" timestamp="1584043229300" />
+    <state x="575" y="342" key="com.intellij.ide.util.TipDialog/0.23.1680.973@0.23.1680.973" timestamp="1583809028118" />
+  </component>
+</project>
