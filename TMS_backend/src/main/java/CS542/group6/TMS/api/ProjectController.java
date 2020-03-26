@@ -21,17 +21,19 @@ public class ProjectController {
 
     @GetMapping("/user/{uid}/projects")
     public List<Project> getProjects(@PathVariable String uid){
-        return projectServices.getProjectIdsByUserId(uid);
+        return projectServices.getProjectsByUserId(uid);
     }
 
     @PostMapping("/user/{uid}/project")
     public Project createProject(@PathVariable String uid, @Valid @RequestBody ProjectDTO projectDTO){
         projectDTO.setCreaterId(uid);
-        return projectServices.createProject(projectDTO.convertToProject());
+        return projectServices.createProject(projectDTO.convertToProject(), uid);
     }
 
     @DeleteMapping("/user/{uid}/project/{pid}")
     public String deleteProject(@PathVariable String uid, @PathVariable String pid){
-
+        if (projectServices.deleteProject(uid, pid))
+            return "success";
+        return "failed";
     }
 }

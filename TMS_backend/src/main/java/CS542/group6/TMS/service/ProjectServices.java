@@ -19,11 +19,33 @@ public class ProjectServices {
         this.userRepository = userRepository;
     }
 
-    public List<Project> getProjectIdsByUserId(String uid){
+    public List<Project> getProjectsByUserId(String uid){
         return userRepository.findById(uid).get().getProjectList();
     }
 
-    public Project createProject(Project project){
-        return projectRepository.save(project);
+    public Project getProjectById(String uid, String pid){
+        List<Project> projectList = userRepository.findById(uid).get().getProjectList();
+        for (Project p :
+                projectList) {
+            if (p.getProjectId().equals(pid))
+                return p;
+        }
+        return null;
+    }
+
+    public Project createProject(Project project, String uid){
+        Project p = projectRepository.save(project);
+        User user = userRepository.findById(uid).get();
+        user.getProjectList().add(p);
+        userRepository.save(user);
+        return p;
+    }
+
+    public boolean deleteProject(String userId, String projectId){
+        Project project = projectRepository.findById(projectId).get();
+        if (project == null || !project.getCreaterId().equals(userId))
+            return false;
+        projectRepository.deleteById(projectId);
+        return true;
     }
 }

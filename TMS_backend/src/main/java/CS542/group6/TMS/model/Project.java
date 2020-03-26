@@ -1,5 +1,6 @@
 package CS542.group6.TMS.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -21,10 +22,12 @@ public class Project {
     @Column(name = "project_name", nullable = false)
     private String projectName;
 
-    @Column(name = "project_id", updatable = false, nullable = false)
+    @Column(name = "creater_id", updatable = false, nullable = false)
     private String createrId;
 
-    @ManyToMany(mappedBy = "projectList")
+    //avoid infinite recursion
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "projectList")
     private List<User> userList;
 
     public Project(){}
