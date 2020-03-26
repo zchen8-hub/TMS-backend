@@ -1,10 +1,8 @@
 package CS542.group6.TMS.model;
 
-import CS542.group6.TMS.util.Util;
 import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
-import java.util.UUID;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -31,16 +29,22 @@ public class User {
     @Column(nullable = false)
     private String phone;
 
-    public User(){
+    @ManyToMany
+    @JoinTable(
+            name = "project_user",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id"))
+    private List<Project> projectList;
 
-    }
+    public User(){}
 
-    public User(String uid, String username, String password, String email, String phone) {
+    public User(String uid, String username, String password, String email, String phone, List<Project> projectList) {
         this.uid = uid;
         this.username = username;
         this.password = password;
         this.email = email;
         this.phone = phone;
+        this.projectList = projectList;
     }
 
     public String getUid() {
@@ -77,5 +81,13 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<Project> getProjectList() {
+        return projectList;
+    }
+
+    public void setProjectList(List<Project> projectList) {
+        this.projectList = projectList;
     }
 }

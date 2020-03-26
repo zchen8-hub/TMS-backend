@@ -2,9 +2,9 @@ package CS542.group6.TMS.service;
 
 import CS542.group6.TMS.model.User;
 import CS542.group6.TMS.repository.UserRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class UserServices {
     private final UserRepository userRepository;
 
