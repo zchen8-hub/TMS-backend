@@ -1,30 +1,32 @@
 package CS542.group6.TMS.api;
 
 import CS542.group6.TMS.dto.UserDTO;
-import CS542.group6.TMS.model.User;
-import CS542.group6.TMS.repository.UserRepository;
-import CS542.group6.TMS.util.Util;
+import CS542.group6.TMS.service.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.UUID;
 
 @RequestMapping("/api")
 @RestController
 public class UserController {
 
-    private UserRepository userRepository;
+    private UserServices userServices;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserServices userServices) {
+        this.userServices = userServices;
     }
 
-    @PostMapping("/users/add")
-    public String addUser(@Valid @RequestBody UserDTO userDTO){
-        User user = userDTO.convertToUser();
-        userRepository.save(user);
-        return user.getUid();
+    @PostMapping("/user/login")
+    public String login(@Valid @RequestBody UserDTO userDTO){
+        String uid = userServices.login(userDTO.convertToUser());
+        return uid != null ? uid : "Wrong username or password";
+    }
+
+    @PostMapping("/user/signup")
+    public String signUp(@Valid @RequestBody UserDTO userDTO){
+        String uid = userServices.signUp(userDTO.convertToUser());
+        return uid != null ? uid : "Username or email already been used!";
     }
 }
