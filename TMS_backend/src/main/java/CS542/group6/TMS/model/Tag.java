@@ -25,7 +25,7 @@ public class Tag {
     @Column(name = "project_id", updatable = false, nullable = false)
     private String projectId;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "transaction_tags",
             joinColumns = @JoinColumn(name = "tag_id"),

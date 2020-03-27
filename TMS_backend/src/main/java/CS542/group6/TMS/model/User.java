@@ -29,7 +29,7 @@ public class User {
     @Column(nullable = false)
     private String phone;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "project_user",
             joinColumns = @JoinColumn(name = "user_id"),
