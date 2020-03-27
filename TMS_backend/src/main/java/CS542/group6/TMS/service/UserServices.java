@@ -12,7 +12,7 @@ public class UserServices {
         this.userRepository = userRepository;
     }
 
-    public String login(User user0){
+    public String login(User user0) {
         User user = userRepository.findByUsername(user0.getUsername());
         if (user == null)
             return "invalid username or password";
@@ -22,9 +22,9 @@ public class UserServices {
         return "invalid username or password";
     }
 
-    public String signUp(User user){
+    public String signUp(User user) {
         if (userRepository.findByUsername(user.getUsername()) == null
-            && userRepository.findByEmail(user.getEmail()) == null){
+                && userRepository.findByEmail(user.getEmail()) == null) {
             userRepository.save(user);
             return user.getUid();
         }

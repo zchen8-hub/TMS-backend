@@ -22,21 +22,21 @@ public class TagServices {
     }
 
     public Tag createTag(String uid, String pid, Tag tag) {
-        if (!projectRepository.findById(pid).get().getCreaterId().equals(uid))
+        if (!projectRepository.getOne(pid).getCreaterId().equals(uid))
             return null;
         return tagRepository.save(tag);
     }
 
     public Boolean updateTag(String uid, String pid, String tid, Tag tag) {
-        Tag updateTag = tagRepository.findById(tid).get();
-        if (updateTag == null || ! projectRepository.findById(pid).get().getCreaterId().equals(uid))
+        Tag updateTag = tagRepository.getOne(tid);
+        if (updateTag == null || !projectRepository.getOne(pid).getCreaterId().equals(uid))
             return false;
-        tagRepository.updateTag(tid,tag.getTagName());
+        tagRepository.updateTag(tid, tag.getTagName());
         return true;
     }
 
     public boolean deleteTag(String uid, String pid, String tid) {
-        if (!projectRepository.findById(pid).get().getCreaterId().equals(uid))
+        if (!projectRepository.getOne(pid).getCreaterId().equals(uid))
             return false;
         tagRepository.deleteById(tid);
         return true;

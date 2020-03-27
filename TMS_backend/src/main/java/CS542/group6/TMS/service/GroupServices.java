@@ -25,7 +25,7 @@ public class GroupServices {
     }
 
     public Group updateGroup(String pid, String gid, GroupDTO groupDTO) {
-        Group group = groupRepository.findById(gid).get();
+        Group group = groupRepository.getOne(gid);
         group.setGroupName(groupDTO.getGroupName());
         return groupRepository.save(group);
     }

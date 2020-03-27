@@ -21,16 +21,16 @@ public class TransactionServices {
         this.groupRepository = groupRepository;
     }
 
-    public List<Transaction> listTransactions(String gid){
-        Group group = groupRepository.findById(gid).get();
+    public List<Transaction> listTransactions(String gid) {
+        Group group = groupRepository.getOne(gid);
         return group.getTransactionList();
     }
 
-    public Transaction addTransaction(Transaction transaction){
+    public Transaction addTransaction(Transaction transaction) {
         return transactionRepository.save(transaction);
     }
 
-    public Transaction updateTransaction(String tid, TransactionDTO transactionDTO){
+    public Transaction updateTransaction(String tid, TransactionDTO transactionDTO) {
         Transaction transaction = transactionRepository.getOne(tid);
         transaction.setGroupId(transactionDTO.getGroupId());
         transaction.setDescription(transactionDTO.getDescription());
@@ -38,7 +38,7 @@ public class TransactionServices {
         return transactionRepository.save(transaction);
     }
 
-    public String deleteTransaction(String tid){
+    public String deleteTransaction(String tid) {
         transactionRepository.deleteById(tid);
         return "success";
     }
