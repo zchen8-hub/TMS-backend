@@ -18,7 +18,6 @@ public class TagServices {
     }
 
     public List<Tag> getTagsByProjectId(String pid) {
-
         return tagRepository.findByProjectId(pid);
     }
 
@@ -37,8 +36,7 @@ public class TagServices {
     }
 
     public boolean deleteTag(String uid, String pid, String tid) {
-        Tag tag = tagRepository.findById(tid).get();
-        if (tag == null || ! projectRepository.findById(pid).get().getCreaterId().equals(uid))
+        if (!projectRepository.findById(pid).get().getCreaterId().equals(uid))
             return false;
         tagRepository.deleteById(tid);
         return true;

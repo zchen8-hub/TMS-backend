@@ -9,8 +9,6 @@ import java.util.UUID;
 @Table(name = "tag")
 public class Tag {
 
-    @Column(name = "project_id", updatable = false, nullable = false)
-    private String projectId;
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -19,10 +17,14 @@ public class Tag {
     )
     @Column(name = "tag_id", updatable = false, nullable = false)
     private String tagId;
+
     @Column(name = "tag_name", nullable = false)
     private String tagName;
 
-    public Tag(String tagId, String tagName,String projectId) {
+    @Column(name = "project_id", updatable = false, nullable = false)
+    private String projectId;
+
+    public Tag(String tagId, String tagName, String projectId) {
         this.tagId = tagId;
         this.projectId = projectId;
         this.tagName = tagName;
@@ -37,10 +39,6 @@ public class Tag {
 
     public String getProjectId() {
         return projectId;
-    }
-
-    public void setTagId(String tagId) {
-        this.tagId = tagId;
     }
 
     public String getTagId() {

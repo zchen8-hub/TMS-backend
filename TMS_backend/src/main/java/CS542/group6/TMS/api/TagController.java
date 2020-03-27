@@ -22,15 +22,15 @@ public class TagController {
     }
 
     @GetMapping("/project/{pid}/tags")
-    public List<Tag> getTags(@PathVariable String pid){
-        return  tagServices.getTagsByProjectId(pid);
+    public List<Tag> getTags(@PathVariable String pid) {
+        return tagServices.getTagsByProjectId(pid);
     }
 
     @PostMapping("user/{uid}/project/{pid}/tag")
     public Tag createTag(@PathVariable("uid") String uid,@PathVariable("pid") String pid,@Valid @RequestBody TagDTO tagDTO){
         tagDTO.setTagId(UUID.randomUUID().toString());
         tagDTO.setProjectId(pid);
-        return tagServices.createTag(uid,pid,tagDTO.convertToTag());
+        return tagServices.createTag(uid, pid, tagDTO.convertToTag());
     }
 
     @PutMapping("user/{uid}/project/{pid}/tag/{tid}")
@@ -41,8 +41,8 @@ public class TagController {
     }
 
     @DeleteMapping("user/{uid}/project/{pid}/tag/{tid}")
-    public String deleteTag(@PathVariable("uid") String uid,@PathVariable("pid") String pid, @PathVariable("tid") String tid){
-        if (tagServices.deleteTag(uid,pid,tid))
+    public String deleteTag(@PathVariable("uid") String uid, @PathVariable("pid") String pid, @PathVariable("tid") String tid) {
+        if (tagServices.deleteTag(uid, pid, tid))
             return "success";
         return "failed";
     }

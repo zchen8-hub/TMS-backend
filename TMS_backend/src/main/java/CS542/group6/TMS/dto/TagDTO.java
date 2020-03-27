@@ -33,11 +33,13 @@ public class TagDTO {
     public void setTagName(String tagName) {
         this.tagName = tagName;
     }
+
     /**
      * Convert DTO to PO (Persistence object, completely match parameters of user table )
+     *
      * @return PO
      */
-    public Tag convertToTag(){
+    public Tag convertToTag() {
         TagDTOConvert tagDTOConvert = new TagDTOConvert();
         return tagDTOConvert.convert(this);
     }

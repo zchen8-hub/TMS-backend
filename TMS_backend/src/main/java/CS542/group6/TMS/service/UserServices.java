@@ -14,18 +14,20 @@ public class UserServices {
 
     public String login(User user0){
         User user = userRepository.findByUsername(user0.getUsername());
+        if (user == null)
+            return "invalid username or password";
         String password = user.getPassword();
         if (user0.getPassword().equals(password))
             return user.getUid();
-        return null;
+        return "invalid username or password";
     }
 
     public String signUp(User user){
         if (userRepository.findByUsername(user.getUsername()) == null
-            && userRepository.findByEmail(user.getUsername()) == null){
+            && userRepository.findByEmail(user.getEmail()) == null){
             userRepository.save(user);
             return user.getUid();
         }
-        return null;
+        return "failed";
     }
 }
