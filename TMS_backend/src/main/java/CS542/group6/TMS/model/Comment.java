@@ -1,29 +1,70 @@
 package CS542.group6.TMS.model;
 
-import java.util.UUID;
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "comments")
 public class Comment {
 
-    private UUID commentid;
-    private UUID creater_id;
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "comment_id", nullable = false,updatable = false)
+    private String commentId;
+    @Column(name = "creater_id", nullable = false,updatable = false)
+    private String createrId;
+    @Column(name = "content", nullable = false)
     private String comment;
-    private UUID supercid;
+    @Column(name = "super_cid",updatable = false)
+    private String supercid;
+    @Column(name = "transaction_id", nullable = false,updatable = false)
+    private String transactionId;
 
-    public Comment(UUID commentid, UUID creater_id, String comment) {
-        this.commentid = commentid;
-        this.creater_id = creater_id;
+    public Comment(String commentId, String createrId, String comment, String transactionId) {
+        this.commentId = commentId;
+        this.createrId = createrId;
         this.comment = comment;
+        this.transactionId = transactionId;
     }
 
-    public UUID getCommentid() {
-        return commentid;
+    public Comment() {
+
     }
 
-    public UUID getCreater_id() {
-        return creater_id;
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
     }
 
-    public UUID getSupercid() {
+    public void setCreaterId(String createrId) {
+        this.createrId = createrId;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public String getCommentId() {
+        return commentId;
+    }
+
+    public String getCreaterId() {
+        return createrId;
+    }
+
+    public String getSupercid() {
         return supercid;
     }
 
@@ -31,7 +72,7 @@ public class Comment {
         this.comment = comment;
     }
 
-    public void setSupercid(UUID supercid) {
+    public void setSupercid(String supercid) {
         this.supercid = supercid;
     }
 }
