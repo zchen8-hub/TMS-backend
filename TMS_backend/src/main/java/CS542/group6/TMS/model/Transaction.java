@@ -35,16 +35,21 @@ public class Transaction {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "transactionList")
     private List<Tag> tagList;
 
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "transactionList")
+    private List<User> UserList;
+
     public Transaction() {
     }
 
-    public Transaction(String transactionId, String groupId, String creatorId, String title, String description, List<Tag> tagList) {
+    public Transaction(String transactionId, String groupId, String creatorId, String title, String description, List<Tag> tagList, List<User> userList) {
         this.transactionId = transactionId;
         this.groupId = groupId;
         this.creatorId = creatorId;
         this.title = title;
         this.description = description;
         this.tagList = tagList;
+        UserList = userList;
     }
 
     public List<Tag> getTagList() {
@@ -53,6 +58,14 @@ public class Transaction {
 
     public void setTagList(List<Tag> tagList) {
         this.tagList = tagList;
+    }
+
+    public List<User> getUserList() {
+        return UserList;
+    }
+
+    public void setUserList(List<User> userList) {
+        UserList = userList;
     }
 
     public String getTransactionId() {

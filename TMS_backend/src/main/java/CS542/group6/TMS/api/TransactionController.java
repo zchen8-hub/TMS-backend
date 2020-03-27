@@ -23,6 +23,34 @@ public class TransactionController {
         return transactionServices.listTransactions(gid);
     }
 
+    @PostMapping("/transaction/{tid}/user/{uid}")
+    public String addUsertoTransaction(@PathVariable String tid,@PathVariable String uid){
+        if(transactionServices.addUsertoTransaction(tid,uid))
+            return "success";
+        return "failed";
+    }
+
+    @DeleteMapping("/transaction/{tid}/user/{uid}")
+    public String deleteUserfromTransaction(@PathVariable String tid,@PathVariable String uid){
+        if(transactionServices.deleteUserfromTransaction(tid,uid))
+            return "success";
+        return "failed";
+    }
+
+    @PostMapping("/transaction/{tid}/tag/{tagId}")
+    public String addTagtoTransaction(@PathVariable String tid,@PathVariable String tagId){
+        if(transactionServices.addTagtoTransaction(tid,tagId))
+            return "success";
+        return "failed";
+    }
+
+    @DeleteMapping("/transaction/{tid}/tag/{tid}")
+    public String deleteTagfromTransaction(@PathVariable String tid,@PathVariable String tagId){
+        if(transactionServices.deleteTagfromTransaction(tid,tagId))
+            return "success";
+        return "failed";
+    }
+
     @PostMapping("/group/{gid}/transaction")
     public Transaction addTransaction(@PathVariable String gid, @RequestBody TransactionDTO transactionDTO){
         transactionDTO.setGroupId(gid);

@@ -2,11 +2,13 @@ package CS542.group6.TMS.service;
 
 import CS542.group6.TMS.dto.TransactionDTO;
 import CS542.group6.TMS.model.Group;
-import CS542.group6.TMS.model.Project;
+import CS542.group6.TMS.model.Tag;
 import CS542.group6.TMS.model.Transaction;
+import CS542.group6.TMS.model.User;
 import CS542.group6.TMS.repository.GroupRepository;
-import CS542.group6.TMS.repository.ProjectRepository;
+import CS542.group6.TMS.repository.TagRepository;
 import CS542.group6.TMS.repository.TransactionRepository;
+import CS542.group6.TMS.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,10 +17,14 @@ import java.util.List;
 public class TransactionServices {
     private final TransactionRepository transactionRepository;
     private final GroupRepository groupRepository;
+    private final UserRepository userRepository;
+    private final TagRepository tagRepository;
 
-    public TransactionServices(TransactionRepository transactionRepository, GroupRepository groupRepository) {
+    public TransactionServices(TransactionRepository transactionRepository, GroupRepository groupRepository, TagRepository tagRepository, UserRepository userRepository) {
         this.transactionRepository = transactionRepository;
         this.groupRepository = groupRepository;
+        this.userRepository = userRepository;
+        this.tagRepository = tagRepository;
     }
 
     public List<Transaction> listTransactions(String gid){
@@ -41,5 +47,45 @@ public class TransactionServices {
     public String deleteTransaction(String tid){
         transactionRepository.deleteById(tid);
         return "success";
+    }
+
+    public boolean addUsertoTransaction(String tid, String uid) {
+        Transaction transaction = transactionRepository.findById(tid).get();
+        if(transaction == null)
+            return false;
+        User user = userRepository.findById(uid).get();
+        user.getTransactionList().add(transaction);
+        userRepository.save(user);
+        return true;
+    }
+
+    public boolean deleteUserfromTransaction(String tid, String uid) {
+        Transaction transaction = transactionRepository.findById(tid).get();
+        if(transaction == null)
+            return false;
+        User user = userRepository.findById(uid).get();
+        user.getTransactionList().remove(transaction);
+        userRepository.save(user);
+        return true;
+    }
+
+    public boolean addTagtoTransaction(String tid, String tagId) {
+        Transaction transaction = transactionRepository.findById(tid).get();
+        if(transaction == null)
+            return false;
+        Tag tag = tagRepository.findById(tagId).get();
+        tag.getTransactionList().add(transaction);
+        tagRepository.save(tag);
+        return true;
+    }
+
+    public boolean deleteTagfromTransaction(String tid, String tagId) {
+        Transaction transaction = transactionRepository.findById(tid).get();
+        if(transaction == null)
+            return false;
+        Tag tag = tagRepository.findById(tagId).get();
+        tag.getTransactionList().remove(transaction);
+        tagRepository.save(tag);
+        return true;
     }
 }

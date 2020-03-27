@@ -36,15 +36,23 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "project_id"))
     private List<Project> projectList;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "transaction_user",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "transaction_id"))
+    private List<Transaction> transactionList;
+
     public User(){}
 
-    public User(String uid, String username, String password, String email, String phone, List<Project> projectList) {
+    public User(String uid, String username, String password, String email, String phone, List<Project> projectList, List<Transaction> transactionList) {
         this.uid = uid;
         this.username = username;
         this.password = password;
         this.email = email;
         this.phone = phone;
         this.projectList = projectList;
+        this.transactionList = transactionList;
     }
 
     public String getUid() {
@@ -89,5 +97,13 @@ public class User {
 
     public void setProjectList(List<Project> projectList) {
         this.projectList = projectList;
+    }
+
+    public List<Transaction> getTransactionList() {
+        return transactionList;
+    }
+
+    public void setTransactionList(List<Transaction> transactionList) {
+        this.transactionList = transactionList;
     }
 }
