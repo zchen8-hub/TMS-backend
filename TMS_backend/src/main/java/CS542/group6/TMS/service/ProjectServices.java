@@ -24,13 +24,12 @@ public class ProjectServices {
     }
 
     public List<Project> getProjectsByUserId(String uid){
-        return userRepository.findById(uid).get().getProjectList();
+        return userRepository.getOne(uid).getProjectList();
     }
 
-    public Project getProjectById(String uid, String pid){
-        List<Project> projectList = userRepository.findById(uid).get().getProjectList();
-        for (Project p :
-                projectList) {
+    public Project listProjects(String uid, String pid){
+        List<Project> projectList = userRepository.getOne(uid).getProjectList();
+        for (Project p : projectList) {
             if (p.getProjectId().equals(pid))
                 return p;
         }
@@ -39,15 +38,15 @@ public class ProjectServices {
 
     public Project createProject(Project project, String uid){
         Project p = projectRepository.save(project);
-        User user = userRepository.findById(uid).get();
+        User user = userRepository.getOne(uid);
         user.getProjectList().add(p);
         userRepository.save(user);
         return p;
     }
 
     public boolean deleteProject(String uid, String pid){
-        Project project = projectRepository.findById(pid).get();
-        if (project == null || !project.getCreaterId().equals(uid))
+        Project project = projectRepository.getOne(pid);
+        if (!project.getCreaterId().equals(uid))
             return false;
         projectRepository.deleteById(pid);
         return true;

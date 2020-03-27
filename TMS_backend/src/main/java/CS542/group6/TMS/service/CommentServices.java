@@ -22,8 +22,8 @@ public class CommentServices {
         return commentRepository.findALLByTransaction(tid);
     }
 
-    public boolean deleteComment(String uid,String cid) {
-        if (!commentRepository.findById(cid).get().getCreaterId().equals(uid))
+    public boolean deleteComment(String uid, String cid) {
+        if (!commentRepository.getOne(cid).getCreaterId().equals(uid))
             return false;
         commentRepository.deleteById(cid);
         return true;
