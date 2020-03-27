@@ -1,32 +1,41 @@
 package CS542.group6.TMS.model;
 
-import CS542.group6.TMS.util.Util;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.UUID;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "project_group")
 public class Group {
     @Id
-    @Column(name = "group_id")
-    private final UUID groupId = Util.generate_UUID();
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "group_id", nullable = false,updatable = false)
+    private String  groupId;
 
-    @Column(name = "project_id", nullable = false)
-    private UUID projectId;
+    @Column(name = "project_id", nullable = false, updatable = false)
+    private String projectId;
     @Column(name = "group_name", nullable = false)
     private String groupName;
 
     public Group(){}
 
-    public Group(String groupName) {
-        this.groupName = groupName;
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
-    public UUID getGroupId() {
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    public String getGroupId() {
         return groupId;
     }
 
