@@ -1,7 +1,6 @@
 package CS542.group6.TMS.dto;
 
 import CS542.group6.TMS.model.Group;
-import CS542.group6.TMS.model.Tag;
 import com.google.common.base.Converter;
 import org.springframework.beans.BeanUtils;
 

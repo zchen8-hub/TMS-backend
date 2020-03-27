@@ -1,7 +1,6 @@
 package CS542.group6.TMS.service;
 
 import CS542.group6.TMS.model.Group;
-import CS542.group6.TMS.model.Tag;
 import CS542.group6.TMS.repository.GroupRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +22,12 @@ public class GroupServices {
         return groupRepository.findByProjectId(pid);
     }
 
-    public Group updateGroup(String pid, String gid, Group group) {
+    public boolean updateGroup(String pid, String gid, Group group) {
         Group updateGroup = groupRepository.findById(gid).get();
         if (updateGroup == null)
-            return null;
-       return groupRepository.updateGroup(gid,group.getGroupName());
+            return false;
+       groupRepository.updateGroup(gid,group.getGroupName());
+       return true;
     }
 
     public boolean deleteGroup(String gid) {
