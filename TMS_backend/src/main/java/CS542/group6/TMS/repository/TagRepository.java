@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public interface TagRepository extends JpaRepository<Tag,String> {
     List<Tag> findByProjectId(@Param("pid") String pid);
 
     @Modifying
+    @Transactional
     @Query("update Tag t set t.tagName = :tagName where t.tagId = :tagId")
-    Tag updateTag(@Param("tagId") String tid,@Param("tagName") String tagName);
+    void updateTag(@Param("tagId") String tid,@Param("tagName") String tagName);
 }

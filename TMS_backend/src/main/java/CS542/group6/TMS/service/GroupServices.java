@@ -2,7 +2,6 @@ package CS542.group6.TMS.service;
 
 import CS542.group6.TMS.dto.GroupDTO;
 import CS542.group6.TMS.model.Group;
-import CS542.group6.TMS.model.Tag;
 import CS542.group6.TMS.repository.GroupRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,6 @@ public class GroupServices {
     }
 
     public boolean deleteGroup(String gid) {
-
         groupRepository.deleteById(gid);
         return true;
     }

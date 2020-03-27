@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "project_group")
 public class Group {
+
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
