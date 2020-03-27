@@ -13,7 +13,4 @@ public interface GroupRepository extends JpaRepository <Group, String> {
     @Query("select g from Group g where g.projectId = :pid")
     List<Group> findByProjectId(@Param("pid") String pid);
 
-    @Modifying
-    @Query("update Group g set g.groupName = :groupName where g.groupId = :groupId")
-    Group updateGroup(@Param("groupId") String gid, @Param("groupName") String groupName);
 }
