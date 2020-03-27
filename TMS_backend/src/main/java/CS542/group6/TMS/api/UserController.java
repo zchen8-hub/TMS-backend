@@ -29,4 +29,11 @@ public class UserController {
         String uid = userServices.signUp(userDTO.convertToUser());
         return uid != null ? uid : "Username or email already been used!";
     }
+
+    @PostMapping("/user/{uid}/invicode/{code}")
+    public String joinProjectByInviCode(@PathVariable String uid, @PathVariable String code){
+        if (userServices.joinProject(uid, code) != null)
+            return "success";
+        return "failed";
+    }
 }

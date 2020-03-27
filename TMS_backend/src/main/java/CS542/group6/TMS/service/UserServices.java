@@ -1,15 +1,23 @@
 package CS542.group6.TMS.service;
 
+import CS542.group6.TMS.model.InviCode;
+import CS542.group6.TMS.model.Project;
 import CS542.group6.TMS.model.User;
+import CS542.group6.TMS.repository.InvitationCodeRepository;
+import CS542.group6.TMS.repository.ProjectRepository;
 import CS542.group6.TMS.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServices {
     private final UserRepository userRepository;
+    private final InvitationCodeRepository invitationCodeRepository;
+    private final ProjectRepository projectRepository;
 
-    public UserServices(UserRepository userRepository) {
+    public UserServices(UserRepository userRepository, InvitationCodeRepository invitationCodeRepository, ProjectRepository projectRepository) {
         this.userRepository = userRepository;
+        this.invitationCodeRepository = invitationCodeRepository;
+        this.projectRepository = projectRepository;
     }
 
     public String login(User user0) {
@@ -29,5 +37,20 @@ public class UserServices {
             return user.getUid();
         }
         return "failed";
+    }
+
+    public String joinProject(String uid, String code){
+        InviCode inviCode = invitationCodeRepository.findByCodeString(code);
+        User user = null;
+        if (inviCode != null){
+            user = userRepository.getOne(uid);
+            Project project = projectRepository.getOne(inviCode.getProjectId());
+            if (project.getUserList().contains(user) || uid.equals(inviCode.getInviterId()))
+                return "Invitee already in the project";
+            user.getProjectList().add(project);
+            userRepository.save(user);
+            return "Success";
+        }
+        return "Failed";
     }
 }
