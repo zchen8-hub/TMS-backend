@@ -32,8 +32,6 @@ public class UserController {
 
     @PostMapping("/user/{uid}/invicode/{code}")
     public String joinProjectByInviCode(@PathVariable String uid, @PathVariable String code){
-        if (userServices.joinProject(uid, code) != null)
-            return "success";
-        return "failed";
+        return userServices.joinProject(uid, code);
     }
 }
