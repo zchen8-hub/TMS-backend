@@ -1,10 +1,12 @@
 package CS542.group6.TMS.service;
 
-import CS542.group6.TMS.dto.ProjectDTO;
+import CS542.group6.TMS.model.InviCode;
 import CS542.group6.TMS.model.Project;
 import CS542.group6.TMS.model.User;
+import CS542.group6.TMS.repository.InvitationCodeRepository;
 import CS542.group6.TMS.repository.ProjectRepository;
 import CS542.group6.TMS.repository.UserRepository;
+import CS542.group6.TMS.util.Util;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,10 +15,12 @@ import java.util.List;
 public class ProjectServices {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+    private final InvitationCodeRepository invitationCodeRepository;
 
-    public ProjectServices(ProjectRepository projectRepository, UserRepository userRepository) {
+    public ProjectServices(ProjectRepository projectRepository, UserRepository userRepository, InvitationCodeRepository invitationCodeRepository) {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
+        this.invitationCodeRepository = invitationCodeRepository;
     }
 
     public List<Project> getProjectsByUserId(String uid){
@@ -41,11 +45,20 @@ public class ProjectServices {
         return p;
     }
 
-    public boolean deleteProject(String userId, String projectId){
-        Project project = projectRepository.findById(projectId).get();
-        if (project == null || !project.getCreaterId().equals(userId))
+    public boolean deleteProject(String uid, String pid){
+        Project project = projectRepository.findById(pid).get();
+        if (project == null || !project.getCreaterId().equals(uid))
             return false;
-        projectRepository.deleteById(projectId);
+        projectRepository.deleteById(pid);
         return true;
+    }
+
+    public String generateInvitationCode(String uid, String pid){
+        InviCode inviCode = new InviCode();
+        inviCode.setInviterId(uid);
+        inviCode.setProjectId(pid);
+        inviCode.setCodeString(Util.GenerateRandomString(10));
+
+        return invitationCodeRepository.save(inviCode).getCodeString();
     }
 }

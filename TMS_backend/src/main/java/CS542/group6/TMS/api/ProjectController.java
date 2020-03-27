@@ -36,4 +36,9 @@ public class ProjectController {
             return "success";
         return "failed";
     }
+
+    @PostMapping("user/{uid}/project/{pid}")
+    public String generateInvitationCode(@PathVariable String uid, @PathVariable String pid){
+        return projectServices.generateInvitationCode(uid, pid);
+    }
 }
