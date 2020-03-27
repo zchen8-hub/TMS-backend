@@ -22,7 +22,6 @@ public class TagServices {
     }
 
     public List<Tag> getTagsByProjectId(String pid) {
-
         return tagRepository.findByProjectId(pid);
     }
 
@@ -34,14 +33,13 @@ public class TagServices {
 
     public Tag updateTag(String uid, String pid, String tid, Tag tag) {
         Tag updateTag = tagRepository.findById(tid).get();
-        if (updateTag == null || ! projectRepository.findById(pid).get().getCreaterId().equals(uid))
+        if (!projectRepository.findById(pid).get().getCreaterId().equals(uid))
             return null;
-        return tagRepository.updateTag(tid,tag.getTagName());
+        return tagRepository.updateTag(tid, tag.getTagName());
     }
 
     public boolean deleteTag(String uid, String pid, String tid) {
-        Tag tag = tagRepository.findById(tid).get();
-        if (tag == null || ! projectRepository.findById(pid).get().getCreaterId().equals(uid))
+        if (!projectRepository.findById(pid).get().getCreaterId().equals(uid))
             return false;
         tagRepository.deleteById(tid);
         return true;
