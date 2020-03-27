@@ -1,8 +1,10 @@
 package CS542.group6.TMS.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "group_transaction")
@@ -29,14 +31,28 @@ public class Transaction {
     @Column(name = "description")
     private String description;
 
-    public Transaction(){}
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "transactionList")
+    private List<Tag> tagList;
 
-    public Transaction(String transactionId, String groupId, String creatorId, String title, String description) {
+    public Transaction() {
+    }
+
+    public Transaction(String transactionId, String groupId, String creatorId, String title, String description, List<Tag> tagList) {
         this.transactionId = transactionId;
         this.groupId = groupId;
         this.creatorId = creatorId;
         this.title = title;
         this.description = description;
+        this.tagList = tagList;
+    }
+
+    public List<Tag> getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(List<Tag> tagList) {
+        this.tagList = tagList;
     }
 
     public String getTransactionId() {
