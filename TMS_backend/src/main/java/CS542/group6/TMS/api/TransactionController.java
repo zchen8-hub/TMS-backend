@@ -23,6 +23,22 @@ public class TransactionController {
         return transactionServices.listTransactions(gid);
     }
 
+    @PostMapping("/group/{gid}/transaction")
+    public Transaction addTransaction(@PathVariable String gid, @RequestBody TransactionDTO transactionDTO){
+        transactionDTO.setGroupId(gid);
+        return transactionServices.addTransaction(transactionDTO.convertToTransaction());
+    }
+
+    @PutMapping("/group/{gid}/transaction/{tid}")
+    public Transaction updateTransaction(@PathVariable String gid, @PathVariable String tid, @RequestBody TransactionDTO transactionDTO){
+        return transactionServices.updateTransaction(tid, transactionDTO);
+    }
+
+    @DeleteMapping("/group/{gid}/transaction/{tid}")
+    public String deleteTransaction(@PathVariable String gid, @PathVariable String tid){
+        return transactionServices.deleteTransaction(tid);
+    }
+
     @PostMapping("/transaction/{tid}/user/{uid}")
     public String addUsertoTransaction(@PathVariable String tid,@PathVariable String uid){
         if(transactionServices.addUsertoTransaction(tid,uid))
@@ -49,21 +65,5 @@ public class TransactionController {
         if(transactionServices.deleteTagfromTransaction(tid,tagId))
             return "success";
         return "failed";
-    }
-
-    @PostMapping("/group/{gid}/transaction")
-    public Transaction addTransaction(@PathVariable String gid, @RequestBody TransactionDTO transactionDTO){
-        transactionDTO.setGroupId(gid);
-        return transactionServices.addTransaction(transactionDTO.convertToTransaction());
-    }
-
-    @PutMapping("/group/{gid}/transaction/{tid}")
-    public Transaction updateTransaction(@PathVariable String gid, @PathVariable String tid, @RequestBody TransactionDTO transactionDTO){
-        return transactionServices.updateTransaction(tid, transactionDTO);
-    }
-
-    @DeleteMapping("/group/{gid}/transaction/{tid}")
-    public String deleteTransaction(@PathVariable String gid, @PathVariable String tid){
-        return transactionServices.deleteTransaction(tid);
     }
 }

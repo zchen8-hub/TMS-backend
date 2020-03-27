@@ -27,15 +27,15 @@ public class TagController {
     }
 
     @PostMapping("user/{uid}/project/{pid}/tag")
-    public Tag createTag(@PathVariable("uid") String uid,@PathVariable("pid") String pid,@Valid @RequestBody TagDTO tagDTO){
+    public Tag createTag(@PathVariable("uid") String uid, @PathVariable("pid") String pid, @Valid @RequestBody TagDTO tagDTO) {
         tagDTO.setTagId(UUID.randomUUID().toString());
         tagDTO.setProjectId(pid);
         return tagServices.createTag(uid, pid, tagDTO.convertToTag());
     }
 
     @PutMapping("user/{uid}/project/{pid}/tag/{tid}")
-    public String updateTag(@PathVariable("uid") String uid,@PathVariable("pid") String pid, @PathVariable("tid") String tid, @Valid @RequestBody TagDTO tagDTO){
-        if(tagServices.updateTag(uid,pid,tid,tagDTO.convertToTag()))
+    public String updateTag(@PathVariable("uid") String uid, @PathVariable("pid") String pid, @PathVariable("tid") String tid, @Valid @RequestBody TagDTO tagDTO) {
+        if (tagServices.updateTag(uid, pid, tid, tagDTO.convertToTag()))
             return "success";
         return "failed";
     }

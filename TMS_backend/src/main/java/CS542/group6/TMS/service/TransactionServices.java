@@ -50,40 +50,32 @@ public class TransactionServices {
     }
 
     public boolean addUsertoTransaction(String tid, String uid) {
-        Transaction transaction = transactionRepository.findById(tid).get();
-        if(transaction == null)
-            return false;
-        User user = userRepository.findById(uid).get();
+        Transaction transaction = transactionRepository.getOne(tid);
+        User user = userRepository.getOne(uid);
         user.getTransactionList().add(transaction);
         userRepository.save(user);
         return true;
     }
 
     public boolean deleteUserfromTransaction(String tid, String uid) {
-        Transaction transaction = transactionRepository.findById(tid).get();
-        if(transaction == null)
-            return false;
-        User user = userRepository.findById(uid).get();
+        Transaction transaction = transactionRepository.getOne(tid);
+        User user = userRepository.getOne(uid);
         user.getTransactionList().remove(transaction);
         userRepository.save(user);
         return true;
     }
 
     public boolean addTagtoTransaction(String tid, String tagId) {
-        Transaction transaction = transactionRepository.findById(tid).get();
-        if(transaction == null)
-            return false;
-        Tag tag = tagRepository.findById(tagId).get();
+        Transaction transaction = transactionRepository.getOne(tid);
+        Tag tag = tagRepository.getOne(tagId);
         tag.getTransactionList().add(transaction);
         tagRepository.save(tag);
         return true;
     }
 
     public boolean deleteTagfromTransaction(String tid, String tagId) {
-        Transaction transaction = transactionRepository.findById(tid).get();
-        if(transaction == null)
-            return false;
-        Tag tag = tagRepository.findById(tagId).get();
+        Transaction transaction = transactionRepository.getOne(tid);
+        Tag tag = tagRepository.getOne(tagId);
         tag.getTransactionList().remove(transaction);
         tagRepository.save(tag);
         return true;
