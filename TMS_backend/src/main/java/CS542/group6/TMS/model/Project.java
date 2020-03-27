@@ -30,13 +30,18 @@ public class Project {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "projectList")
     private List<User> userList;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
+    private List<Group> groupList;
+
     public Project(){}
 
-    public Project(String projectId, String projectName, String createrId, List<User> userList) {
+    public Project(String projectId, String projectName, String createrId, List<User> userList, List<Group> groupList) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.createrId = createrId;
         this.userList = userList;
+        this.groupList = groupList;
     }
 
     public String getProjectId() {
@@ -65,5 +70,13 @@ public class Project {
 
     public void setUserList(List<User> userList) {
         this.userList = userList;
+    }
+
+    public List<Group> getGroupList() {
+        return groupList;
+    }
+
+    public void setGroupList(List<Group> groupList) {
+        this.groupList = groupList;
     }
 }

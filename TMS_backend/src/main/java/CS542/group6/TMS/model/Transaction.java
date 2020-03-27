@@ -5,7 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "transaction_proj")
+@Table(name = "group_transaction")
 public class Transaction {
 
     @Id
@@ -17,10 +17,7 @@ public class Transaction {
     @Column(name = "transaction_id", updatable = false, nullable = false)
     private String transactionId;
 
-    @Column(name = "project_id", updatable = false, nullable = false)
-    private String projectId;
-
-    @Column(name = "group_id", updatable = false, nullable = false)
+    @Column(name = "group_id", nullable = false)
     private String groupId;
 
     @Column(name = "creator_id", updatable = false, nullable = false)
@@ -34,9 +31,8 @@ public class Transaction {
 
     public Transaction(){}
 
-    public Transaction(String transactionId, String projectId, String groupId, String creatorId, String title, String description) {
+    public Transaction(String transactionId, String groupId, String creatorId, String title, String description) {
         this.transactionId = transactionId;
-        this.projectId = projectId;
         this.groupId = groupId;
         this.creatorId = creatorId;
         this.title = title;
@@ -45,10 +41,6 @@ public class Transaction {
 
     public String getTransactionId() {
         return transactionId;
-    }
-
-    public String getProjectId() {
-        return projectId;
     }
 
     public String getGroupId() {
@@ -65,10 +57,6 @@ public class Transaction {
 
     public String getDescription() {
         return description;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
     }
 
     public void setGroupId(String groupId) {
