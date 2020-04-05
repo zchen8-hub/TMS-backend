@@ -1,5 +1,6 @@
 package CS542.group6.TMS.api;
 
+import CS542.group6.TMS.dto.JsonResult;
 import CS542.group6.TMS.dto.UserDTO;
 import CS542.group6.TMS.service.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +20,25 @@ public class UserController {
     }
 
     @PostMapping("/user/login")
-    public String login(@Valid @RequestBody UserDTO userDTO){
+    public JsonResult<String> login(@Valid @RequestBody UserDTO userDTO){
         String uid = userServices.login(userDTO.convertToUser());
-        return uid != null ? uid : "Wrong username or password";
+
+        return uid != null ?
+                new JsonResult<>(uid) :
+                new JsonResult("Invalid username or passcode");
     }
 
     @PostMapping("/user/signup")
-    public String signUp(@Valid @RequestBody UserDTO userDTO){
+    public JsonResult<String> signUp(@Valid @RequestBody UserDTO userDTO){
         String uid = userServices.signUp(userDTO.convertToUser());
-        return uid != null ? uid : "Username or email already been used!";
+        return uid != null ?
+                new JsonResult<>(uid) :
+                new JsonResult("Username or email already been used!");
     }
 
     @PostMapping("/user/{uid}/invicode/{code}")
-    public String joinProjectByInviCode(@PathVariable String uid, @PathVariable String code){
-        return userServices.joinProject(uid, code);
+    public JsonResult joinProjectByInviCode(@PathVariable String uid, @PathVariable String code){
+        String msg = userServices.joinProject(uid, code);
+        return new JsonResult(msg);
     }
 }

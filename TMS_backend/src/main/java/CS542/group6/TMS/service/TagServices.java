@@ -27,18 +27,18 @@ public class TagServices {
         return tagRepository.save(tag);
     }
 
-    public Boolean updateTag(String uid, String pid, String tid, Tag tag) {
-        Tag updateTag = tagRepository.getOne(tid);
-        if (updateTag == null || !projectRepository.getOne(pid).getCreaterId().equals(uid))
-            return false;
-        tagRepository.updateTag(tid, tag.getTagName());
-        return true;
+    public Tag updateTag(String uid, String pid, String tid, Tag tag) {
+        Tag updatedTag = tagRepository.getOne(tid);
+        if (!projectRepository.getOne(pid).getCreaterId().equals(uid))
+            return null;
+        updatedTag.setTagName(tag.getTagName());
+        return tagRepository.save(updatedTag);
     }
 
-    public boolean deleteTag(String uid, String pid, String tid) {
+    public String deleteTag(String uid, String pid, String tid) {
         if (!projectRepository.getOne(pid).getCreaterId().equals(uid))
-            return false;
+            return "Permission Denied";
         tagRepository.deleteById(tid);
-        return true;
+        return "Success";
     }
 }

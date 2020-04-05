@@ -1,7 +1,10 @@
 package CS542.group6.TMS.api;
 
+import CS542.group6.TMS.dto.JsonResult;
 import CS542.group6.TMS.dto.TransactionDTO;
+import CS542.group6.TMS.model.Tag;
 import CS542.group6.TMS.model.Transaction;
+import CS542.group6.TMS.model.User;
 import CS542.group6.TMS.service.TransactionServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,51 +22,51 @@ public class TransactionController {
     }
 
     @GetMapping("/group/{gid}/transactions")
-    public List<Transaction> listTransactions(@PathVariable String gid){
-        return transactionServices.listTransactions(gid);
+    public JsonResult<List<Transaction>> listTransactions(@PathVariable String gid) {
+        List<Transaction> transactions = transactionServices.listTransactions(gid);
+        return new JsonResult<>(transactions);
     }
 
     @PostMapping("/group/{gid}/transaction")
-    public Transaction addTransaction(@PathVariable String gid, @RequestBody TransactionDTO transactionDTO){
+    public JsonResult<Transaction> addTransaction(@PathVariable String gid, @RequestBody TransactionDTO transactionDTO) {
         transactionDTO.setGroupId(gid);
-        return transactionServices.addTransaction(transactionDTO.convertToTransaction());
+        Transaction transaction = transactionServices.addTransaction(transactionDTO.convertToTransaction());
+        return new JsonResult<>(transaction);
     }
 
     @PutMapping("/group/{gid}/transaction/{tid}")
-    public Transaction updateTransaction(@PathVariable String gid, @PathVariable String tid, @RequestBody TransactionDTO transactionDTO){
-        return transactionServices.updateTransaction(tid, transactionDTO);
+    public JsonResult<Transaction> updateTransaction(@PathVariable String gid, @PathVariable String tid, @RequestBody TransactionDTO transactionDTO) {
+        Transaction transaction = transactionServices.updateTransaction(tid, transactionDTO);
+        return new JsonResult<>(transaction);
     }
 
     @DeleteMapping("/group/{gid}/transaction/{tid}")
-    public String deleteTransaction(@PathVariable String gid, @PathVariable String tid){
-        return transactionServices.deleteTransaction(tid);
+    public JsonResult deleteTransaction(@PathVariable String gid, @PathVariable String tid) {
+        String result = transactionServices.deleteTransaction(tid);
+        return new JsonResult(result);
     }
 
     @PostMapping("/transaction/{tid}/user/{uid}")
-    public String addUsertoTransaction(@PathVariable String tid,@PathVariable String uid){
-        if(transactionServices.addUsertoTransaction(tid,uid))
-            return "success";
-        return "failed";
+    public JsonResult<User> addUserToTransaction(@PathVariable String tid, @PathVariable String uid) {
+        User user = transactionServices.addUserToTransaction(tid, uid);
+        return new JsonResult<>(user);
     }
 
     @DeleteMapping("/transaction/{tid}/user/{uid}")
-    public String deleteUserfromTransaction(@PathVariable String tid,@PathVariable String uid){
-        if(transactionServices.deleteUserfromTransaction(tid,uid))
-            return "success";
-        return "failed";
+    public JsonResult<User> deleteUserFromTransaction(@PathVariable String tid, @PathVariable String uid) {
+        User user = transactionServices.deleteUserFromTransaction(tid, uid);
+        return new JsonResult<>(user);
     }
 
     @PostMapping("/transaction/{tid}/tag/{tagId}")
-    public String addTagtoTransaction(@PathVariable String tid,@PathVariable String tagId){
-        if(transactionServices.addTagtoTransaction(tid,tagId))
-            return "success";
-        return "failed";
+    public JsonResult<Transaction> addTagToTransaction(@PathVariable String tid, @PathVariable String tagId) {
+        Transaction transaction = transactionServices.addTagToTransaction(tid, tagId);
+        return new JsonResult<>(transaction);
     }
 
     @DeleteMapping("/transaction/{tid}/tag/{tid}")
-    public String deleteTagfromTransaction(@PathVariable String tid,@PathVariable String tagId){
-        if(transactionServices.deleteTagfromTransaction(tid,tagId))
-            return "success";
-        return "failed";
+    public JsonResult<Transaction> deleteTagFromTransaction(@PathVariable String tid, @PathVariable String tagId) {
+        Transaction transaction = transactionServices.deleteTagFromTransaction(tid, tagId);
+        return new JsonResult<>(transaction);
     }
 }
