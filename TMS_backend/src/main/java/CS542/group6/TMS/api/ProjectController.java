@@ -1,5 +1,6 @@
 package CS542.group6.TMS.api;
 
+import CS542.group6.TMS.dto.JsonResult;
 import CS542.group6.TMS.dto.ProjectDTO;
 import CS542.group6.TMS.model.Project;
 import CS542.group6.TMS.service.ProjectServices;
@@ -20,25 +21,27 @@ public class ProjectController {
     }
 
     @GetMapping("/user/{uid}/projects")
-    public List<Project> getProjects(@PathVariable String uid){
-        return projectServices.getProjectsByUserId(uid);
+    public JsonResult<List<Project>> getProjects(@PathVariable String uid){
+        List<Project> projects = projectServices.getProjectsByUserId(uid);
+        return new JsonResult<>(projects);
     }
 
     @PostMapping("/user/{uid}/project")
-    public Project createProject(@PathVariable String uid, @Valid @RequestBody ProjectDTO projectDTO){
+    public JsonResult<Project> createProject(@PathVariable String uid, @Valid @RequestBody ProjectDTO projectDTO){
         projectDTO.setCreaterId(uid);
-        return projectServices.createProject(projectDTO.convertToProject(), uid);
+        Project project = projectServices.createProject(projectDTO.convertToProject(), uid);
+        return new JsonResult<>(project);
     }
 
     @DeleteMapping("/user/{uid}/project/{pid}")
-    public String deleteProject(@PathVariable String uid, @PathVariable String pid){
-        if (projectServices.deleteProject(uid, pid))
-            return "success";
-        return "failed";
+    public JsonResult deleteProject(@PathVariable String uid, @PathVariable String pid){
+        String msg = projectServices.deleteProject(uid, pid);
+        return new JsonResult(msg);
     }
 
     @PostMapping("user/{uid}/project/{pid}")
-    public String generateInvitationCode(@PathVariable String uid, @PathVariable String pid){
-        return projectServices.generateInvitationCode(uid, pid);
+    public JsonResult<String> generateInvitationCode(@PathVariable String uid, @PathVariable String pid){
+        String code = projectServices.generateInvitationCode(uid, pid);
+        return new JsonResult<>(code);
     }
 }

@@ -30,8 +30,8 @@ public class GroupServices {
         return groupRepository.save(group);
     }
 
-    public boolean deleteGroup(String gid) {
+    public String deleteGroup(String gid) {
         groupRepository.deleteById(gid);
-        return true;
+        return "Success";
     }
 }

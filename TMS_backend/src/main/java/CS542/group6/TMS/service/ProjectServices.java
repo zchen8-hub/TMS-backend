@@ -44,12 +44,12 @@ public class ProjectServices {
         return p;
     }
 
-    public boolean deleteProject(String uid, String pid){
+    public String deleteProject(String uid, String pid){
         Project project = projectRepository.getOne(pid);
         if (!project.getCreaterId().equals(uid))
-            return false;
+            return "Permission denied";
         projectRepository.deleteById(pid);
-        return true;
+        return "Success";
     }
 
     public String generateInvitationCode(String uid, String pid){

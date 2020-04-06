@@ -1,6 +1,7 @@
 package CS542.group6.TMS.api;
 
 import CS542.group6.TMS.dto.CommentDTO;
+import CS542.group6.TMS.dto.JsonResult;
 import CS542.group6.TMS.model.Comment;
 import CS542.group6.TMS.service.CommentServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,21 +21,22 @@ public class CommentController {
     }
 
     @GetMapping("/user/{uid}/transaction/{tid}/comments")
-    public List<Comment> getComments(@PathVariable("uid") String uid, @PathVariable("tid") String tid){
-        return commentServices.getCommentsByTransactionId(tid);
+    public JsonResult<List<Comment>> getComments(@PathVariable("uid") String uid, @PathVariable("tid") String tid) {
+        List<Comment> comments = commentServices.getCommentsByTransactionId(tid);
+        return new JsonResult<>(comments);
     }
 
     @PostMapping("/user/{uid}/transaction/{tid}/comment")
-    public Comment createComment(@PathVariable("uid") String uid, @PathVariable("tid") String tid, @Valid @RequestBody CommentDTO commentDTO){
+    public JsonResult<Comment> createComment(@PathVariable("uid") String uid, @PathVariable("tid") String tid, @Valid @RequestBody CommentDTO commentDTO) {
         commentDTO.setTransactionId(tid);
         commentDTO.setCreaterId(uid);
-        return commentServices.createComment(commentDTO.convertToComment());
+        Comment comment = commentServices.createComment(commentDTO.convertToComment());
+        return new JsonResult<>(comment);
     }
 
     @DeleteMapping("/user/{uid}/transaction/{tid}/comment/{cid}")
-    public String deleteComment(@PathVariable("uid") String uid, @PathVariable("tid") String tid,@PathVariable("cid") String cid){
-        if(commentServices.deleteComment(uid,cid))
-            return "success";
-        return "failed";
+    public JsonResult deleteComment(@PathVariable("uid") String uid, @PathVariable("tid") String tid, @PathVariable("cid") String cid) {
+        String msg = commentServices.deleteComment(uid, cid);
+        return new JsonResult(msg);
     }
 }

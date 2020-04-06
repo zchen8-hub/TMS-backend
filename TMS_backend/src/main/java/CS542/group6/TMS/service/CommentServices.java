@@ -22,10 +22,10 @@ public class CommentServices {
         return commentRepository.findALLByTransaction(tid);
     }
 
-    public boolean deleteComment(String uid, String cid) {
+    public String deleteComment(String uid, String cid) {
         if (!commentRepository.getOne(cid).getCreaterId().equals(uid))
-            return false;
+            return "Permission Denied";
         commentRepository.deleteById(cid);
-        return true;
+        return "Success";
     }
 }
