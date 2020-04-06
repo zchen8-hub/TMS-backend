@@ -76,4 +76,12 @@ public class TransactionServices {
         transaction.getTagList().remove(tag);
         return transactionRepository.save(transaction);
     }
+
+    public List<Tag> listTags(String tid) {
+        return transactionRepository.findTagsByTransactionId(tid);
+    }
+
+    public List<User> listTransactionUsers(String tid) {
+        return transactionRepository.findUserByTransactionId(tid);
+    }
 }

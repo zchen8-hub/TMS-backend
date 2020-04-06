@@ -46,6 +46,11 @@ public class TransactionController {
         return new JsonResult(result);
     }
 
+    @GetMapping("/transaction/{tid}/users")
+    public List<User> listTransactionUsers(@PathVariable String tid){
+        return transactionServices.listTransactionUsers(tid);
+    }
+
     @PostMapping("/transaction/{tid}/user/{uid}")
     public JsonResult<User> addUserToTransaction(@PathVariable String tid, @PathVariable String uid) {
         User user = transactionServices.addUserToTransaction(tid, uid);
@@ -58,14 +63,19 @@ public class TransactionController {
         return new JsonResult<>(user);
     }
 
+    @GetMapping("/transaction/{tid}/tags")
+    public List<Tag> listTags(@PathVariable String tid){
+        return transactionServices.listTags(tid);
+    }
+
     @PostMapping("/transaction/{tid}/tag/{tagId}")
     public JsonResult<Transaction> addTagToTransaction(@PathVariable String tid, @PathVariable String tagId) {
         Transaction transaction = transactionServices.addTagToTransaction(tid, tagId);
         return new JsonResult<>(transaction);
     }
 
-    @DeleteMapping("/transaction/{tid}/tag/{tid}")
-    public JsonResult<Transaction> deleteTagFromTransaction(@PathVariable String tid, @PathVariable String tagId) {
+    @DeleteMapping("/transaction/{tid}/tag/{tagId}")
+    public String deleteTagfromTransaction(@PathVariable String tid,@PathVariable String tagId){
         Transaction transaction = transactionServices.deleteTagFromTransaction(tid, tagId);
         return new JsonResult<>(transaction);
     }
