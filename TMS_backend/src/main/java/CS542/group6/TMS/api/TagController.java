@@ -1,5 +1,6 @@
 package CS542.group6.TMS.api;
 
+import CS542.group6.TMS.dto.JsonResult;
 import CS542.group6.TMS.dto.TagDTO;
 import CS542.group6.TMS.model.Tag;
 import CS542.group6.TMS.service.TagServices;
@@ -22,28 +23,28 @@ public class TagController {
     }
 
     @GetMapping("/project/{pid}/tags")
-    public List<Tag> getTags(@PathVariable String pid) {
-        return tagServices.getTagsByProjectId(pid);
+    public JsonResult<List<Tag>> getTags(@PathVariable String pid) {
+        List<Tag> tags = tagServices.getTagsByProjectId(pid);
+        return new JsonResult<>(tags);
     }
 
     @PostMapping("user/{uid}/project/{pid}/tag")
-    public Tag createTag(@PathVariable("uid") String uid, @PathVariable("pid") String pid, @Valid @RequestBody TagDTO tagDTO) {
+    public JsonResult<Tag> createTag(@PathVariable("uid") String uid, @PathVariable("pid") String pid, @Valid @RequestBody TagDTO tagDTO) {
         tagDTO.setTagId(UUID.randomUUID().toString());
         tagDTO.setProjectId(pid);
-        return tagServices.createTag(uid, pid, tagDTO.convertToTag());
+        Tag tag = tagServices.createTag(uid, pid, tagDTO.convertToTag());
+        return new JsonResult<>(tag);
     }
 
     @PutMapping("user/{uid}/project/{pid}/tag/{tid}")
-    public String updateTag(@PathVariable("uid") String uid, @PathVariable("pid") String pid, @PathVariable("tid") String tid, @Valid @RequestBody TagDTO tagDTO) {
-        if (tagServices.updateTag(uid, pid, tid, tagDTO.convertToTag()))
-            return "success";
-        return "failed";
+    public JsonResult<Tag> updateTag(@PathVariable("uid") String uid, @PathVariable("pid") String pid, @PathVariable("tid") String tid, @Valid @RequestBody TagDTO tagDTO) {
+        Tag tag = tagServices.updateTag(uid, pid, tid, tagDTO.convertToTag());
+        return new JsonResult<>(tag);
     }
 
     @DeleteMapping("user/{uid}/project/{pid}/tag/{tid}")
-    public String deleteTag(@PathVariable("uid") String uid, @PathVariable("pid") String pid, @PathVariable("tid") String tid) {
-        if (tagServices.deleteTag(uid, pid, tid))
-            return "success";
-        return "failed";
+    public JsonResult deleteTag(@PathVariable("uid") String uid, @PathVariable("pid") String pid, @PathVariable("tid") String tid) {
+        String msg = (tagServices.deleteTag(uid, pid, tid));
+        return new JsonResult(msg);
     }
 }

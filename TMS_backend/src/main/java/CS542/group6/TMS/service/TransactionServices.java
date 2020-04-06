@@ -49,36 +49,32 @@ public class TransactionServices {
         return "success";
     }
 
-    public boolean addUsertoTransaction(String tid, String uid) {
+    public User addUserToTransaction(String tid, String uid) {
         Transaction transaction = transactionRepository.getOne(tid);
         User user = userRepository.getOne(uid);
         user.getTransactionList().add(transaction);
-        userRepository.save(user);
-        return true;
+        return userRepository.save(user);
     }
 
-    public boolean deleteUserfromTransaction(String tid, String uid) {
+    public User deleteUserFromTransaction(String tid, String uid) {
         Transaction transaction = transactionRepository.getOne(tid);
         User user = userRepository.getOne(uid);
         user.getTransactionList().remove(transaction);
-        userRepository.save(user);
-        return true;
+        return userRepository.save(user);
     }
 
-    public boolean addTagtoTransaction(String tid, String tagId) {
+    public Transaction addTagToTransaction(String tid, String tagId) {
         Transaction transaction = transactionRepository.getOne(tid);
         Tag tag = tagRepository.getOne(tagId);
-        tag.getTransactionList().add(transaction);
-        tagRepository.save(tag);
-        return true;
+        transaction.getTagList().remove(tag);
+        return transactionRepository.save(transaction);
     }
 
-    public boolean deleteTagfromTransaction(String tid, String tagId) {
+    public Transaction deleteTagFromTransaction(String tid, String tagId) {
         Transaction transaction = transactionRepository.getOne(tid);
         Tag tag = tagRepository.getOne(tagId);
-        tag.getTransactionList().remove(transaction);
-        tagRepository.save(tag);
-        return true;
+        transaction.getTagList().remove(tag);
+        return transactionRepository.save(transaction);
     }
 
     public List<Tag> listTags(String tid) {
