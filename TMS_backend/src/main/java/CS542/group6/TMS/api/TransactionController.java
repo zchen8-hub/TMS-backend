@@ -1,7 +1,9 @@
 package CS542.group6.TMS.api;
 
 import CS542.group6.TMS.dto.TransactionDTO;
+import CS542.group6.TMS.model.Tag;
 import CS542.group6.TMS.model.Transaction;
+import CS542.group6.TMS.model.User;
 import CS542.group6.TMS.service.TransactionServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +41,11 @@ public class TransactionController {
         return transactionServices.deleteTransaction(tid);
     }
 
+    @GetMapping("/transaction/{tid}/users")
+    public List<User> listTransactionUsers(@PathVariable String tid){
+        return transactionServices.listTransactionUsers(tid);
+    }
+
     @PostMapping("/transaction/{tid}/user/{uid}")
     public String addUsertoTransaction(@PathVariable String tid,@PathVariable String uid){
         if(transactionServices.addUsertoTransaction(tid,uid))
@@ -53,6 +60,11 @@ public class TransactionController {
         return "failed";
     }
 
+    @GetMapping("/transaction/{tid}/tags")
+    public List<Tag> listTags(@PathVariable String tid){
+        return transactionServices.listTags(tid);
+    }
+
     @PostMapping("/transaction/{tid}/tag/{tagId}")
     public String addTagtoTransaction(@PathVariable String tid,@PathVariable String tagId){
         if(transactionServices.addTagtoTransaction(tid,tagId))
@@ -60,7 +72,7 @@ public class TransactionController {
         return "failed";
     }
 
-    @DeleteMapping("/transaction/{tid}/tag/{tid}")
+    @DeleteMapping("/transaction/{tid}/tag/{tagId}")
     public String deleteTagfromTransaction(@PathVariable String tid,@PathVariable String tagId){
         if(transactionServices.deleteTagfromTransaction(tid,tagId))
             return "success";

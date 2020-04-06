@@ -80,4 +80,12 @@ public class TransactionServices {
         tagRepository.save(tag);
         return true;
     }
+
+    public List<Tag> listTags(String tid) {
+        return transactionRepository.findTagsByTransactionId(tid);
+    }
+
+    public List<User> listTransactionUsers(String tid) {
+        return transactionRepository.findUserByTransactionId(tid);
+    }
 }
