@@ -16,6 +16,16 @@ public class JsonResult<T> {
         this.msg = "Success";
     }
 
+    /**
+     * Default message and code with data return.
+     * @param data
+     */
+    public JsonResult(T data){
+        this.data = data;
+        this.code = "200";
+        this.msg = "Success";
+    }
+
     public JsonResult(String msg){
         this.code = "200";
         this.msg = msg;
@@ -32,16 +42,6 @@ public class JsonResult<T> {
     }
 
     /**
-     * Default message and code with data return.
-     * @param data
-     */
-    public JsonResult(T data){
-        this.data = data;
-        this.code = "200";
-        this.msg = "Success";
-    }
-
-    /**
      * Designate message with data return.
      * @param data
      * @param msg
@@ -49,6 +49,30 @@ public class JsonResult<T> {
     public JsonResult(T data, String msg){
         this.data = data;
         this.code = "200";
+        this.msg = msg;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
         this.msg = msg;
     }
 }

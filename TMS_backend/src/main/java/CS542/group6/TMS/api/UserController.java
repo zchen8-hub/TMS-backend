@@ -20,24 +20,31 @@ public class UserController {
     }
 
     @PostMapping("/user/login")
-    public JsonResult<String> login(@Valid @RequestBody UserDTO userDTO){
+    public JsonResult<UserDTO> login(@Valid @RequestBody UserDTO userDTO) {
         String uid = userServices.login(userDTO.convertToUser());
-
-        return uid != null ?
-                new JsonResult<>(uid) :
-                new JsonResult("Invalid username or passcode");
+        if (uid != null){
+            UserDTO json = new UserDTO();
+            json.setUid(uid);
+            return new JsonResult<>(json);
+        } else {
+            return new JsonResult("Invalid username or passcode");
+        }
     }
 
     @PostMapping("/user/signup")
-    public JsonResult<String> signUp(@Valid @RequestBody UserDTO userDTO){
+    public JsonResult<UserDTO> signUp(@Valid @RequestBody UserDTO userDTO) {
         String uid = userServices.signUp(userDTO.convertToUser());
-        return uid != null ?
-                new JsonResult<>(uid) :
-                new JsonResult("Username or email already been used!");
+        if (uid != null){
+            UserDTO json = new UserDTO();
+            json.setUid(uid);
+            return new JsonResult<>(json);
+        } else {
+            return new JsonResult("Username or email already been used!");
+        }
     }
 
     @PostMapping("/user/{uid}/invicode/{code}")
-    public JsonResult joinProjectByInviCode(@PathVariable String uid, @PathVariable String code){
+    public JsonResult joinProjectByInviCode(@PathVariable String uid, @PathVariable String code) {
         String msg = userServices.joinProject(uid, code);
         return new JsonResult(msg);
     }

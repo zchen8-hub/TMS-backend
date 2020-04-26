@@ -75,7 +75,7 @@ public class TransactionController {
     }
 
     @DeleteMapping("/transaction/{tid}/tag/{tagId}")
-    public String deleteTagfromTransaction(@PathVariable String tid,@PathVariable String tagId){
+    public JsonResult deleteTagFromTransaction(@PathVariable String tid,@PathVariable String tagId){
         Transaction transaction = transactionServices.deleteTagFromTransaction(tid, tagId);
         return new JsonResult<>(transaction);
     }

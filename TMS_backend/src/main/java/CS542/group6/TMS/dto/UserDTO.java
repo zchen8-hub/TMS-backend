@@ -13,6 +13,7 @@ public class UserDTO {
     private String password;
     private String email;
     private String phone;
+    private String uid;
 
     public String getUsername() {
         return username;
@@ -44,6 +45,14 @@ public class UserDTO {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     /**
