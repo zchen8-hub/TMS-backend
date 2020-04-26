@@ -39,18 +39,17 @@ public class UserServices {
         return "failed";
     }
 
-    public String joinProject(String uid, String code){
+    public Project joinProject(String uid, String code){
         InviCode inviCode = invitationCodeRepository.findByCodeString(code);
-        User user = null;
         if (inviCode != null){
-            user = userRepository.getOne(uid);
+            User user = userRepository.getOne(uid);
             Project project = projectRepository.getOne(inviCode.getProjectId());
             if (project.getUserList().contains(user) || uid.equals(inviCode.getInviterId()))
-                return "Invitee already in the project";
+                return project;
             user.getProjectList().add(project);
             userRepository.save(user);
-            return "Success";
+            return project;   //Success
         }
-        return "Failed";
+        return null;   //Failed
     }
 }

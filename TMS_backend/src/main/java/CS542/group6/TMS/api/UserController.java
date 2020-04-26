@@ -1,7 +1,9 @@
 package CS542.group6.TMS.api;
 
 import CS542.group6.TMS.dto.JsonResult;
+import CS542.group6.TMS.dto.ProjectDTO;
 import CS542.group6.TMS.dto.UserDTO;
+import CS542.group6.TMS.model.Project;
 import CS542.group6.TMS.service.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -44,8 +46,14 @@ public class UserController {
     }
 
     @PostMapping("/user/{uid}/invicode/{code}")
-    public JsonResult joinProjectByInviCode(@PathVariable String uid, @PathVariable String code) {
-        String msg = userServices.joinProject(uid, code);
-        return new JsonResult(msg);
+    public JsonResult<ProjectDTO> joinProjectByInvitationCode(@PathVariable String uid, @PathVariable String code) {
+        Project result = userServices.joinProject(uid, code);
+        if (result == null)
+            return new JsonResult("Invitation code not existed");
+        ProjectDTO projectDTO = new ProjectDTO();
+        projectDTO.setProjectId(result.getProjectId());
+        projectDTO.setProjectName(result.getProjectName());
+        projectDTO.setCreaterId(result.getCreaterId());
+        return new JsonResult<>(projectDTO);
     }
 }
