@@ -8,6 +8,8 @@ import CS542.group6.TMS.repository.ProjectRepository;
 import CS542.group6.TMS.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserServices {
     private final UserRepository userRepository;
@@ -20,14 +22,14 @@ public class UserServices {
         this.projectRepository = projectRepository;
     }
 
-    public String login(User user0) {
+    public User login(User user0) {
         User user = userRepository.findByUsername(user0.getUsername());
         if (user == null)
-            return "invalid username or password";
+            return null;
         String password = user.getPassword();
         if (user0.getPassword().equals(password))
-            return user.getUid();
-        return "invalid username or password";
+            return user;
+        return null;
     }
 
     public String signUp(User user) {
@@ -39,9 +41,9 @@ public class UserServices {
         return "failed";
     }
 
-    public Project joinProject(String uid, String code){
+    public Project joinProject(String uid, String code) {
         InviCode inviCode = invitationCodeRepository.findByCodeString(code);
-        if (inviCode != null){
+        if (inviCode != null) {
             User user = userRepository.getOne(uid);
             Project project = projectRepository.getOne(inviCode.getProjectId());
             if (project.getUserList().contains(user) || uid.equals(inviCode.getInviterId()))
@@ -51,5 +53,10 @@ public class UserServices {
             return project;   //Success
         }
         return null;   //Failed
+    }
+
+    public User findUserById(String uid) {
+        Optional<User> user = userRepository.findById(uid);
+        return user.orElse(null);
     }
 }

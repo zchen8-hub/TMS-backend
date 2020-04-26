@@ -8,6 +8,7 @@ public class ProjectDTO {
     private String projectId;
     private String projectName;
     private String createrId;
+    private String creatorName;
 
     public String getProjectId() {
         return projectId;
@@ -33,9 +34,22 @@ public class ProjectDTO {
         this.createrId = createrId;
     }
 
-    public Project convertToProject(){
+    public String getCreatorName() {
+        return creatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
+
+    public Project convertToProject() {
         ProjectDTOConvert projectDTOConvert = new ProjectDTOConvert();
         return projectDTOConvert.convert(this);
+    }
+
+    public ProjectDTO convertFromProject(Project project) {
+        ProjectDTOConvert projectDTOConvert = new ProjectDTOConvert();
+        return projectDTOConvert.reverse().convert(project);
     }
 
     private static class ProjectDTOConvert extends Converter<ProjectDTO, Project> {
@@ -49,7 +63,9 @@ public class ProjectDTO {
 
         @Override
         protected ProjectDTO doBackward(Project project) {
-            throw new AssertionError("Reversion is not supported");
+            ProjectDTO dto = new ProjectDTO();
+            BeanUtils.copyProperties(project, dto);
+            return dto;
         }
     }
 }

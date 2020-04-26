@@ -4,6 +4,7 @@ import CS542.group6.TMS.dto.JsonResult;
 import CS542.group6.TMS.dto.ProjectDTO;
 import CS542.group6.TMS.dto.UserDTO;
 import CS542.group6.TMS.model.Project;
+import CS542.group6.TMS.model.User;
 import CS542.group6.TMS.service.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +24,10 @@ public class UserController {
 
     @PostMapping("/user/login")
     public JsonResult<UserDTO> login(@Valid @RequestBody UserDTO userDTO) {
-        String uid = userServices.login(userDTO.convertToUser());
-        if (uid != null){
+        User user = userServices.login(userDTO.convertToUser());
+        if (user != null){
             UserDTO json = new UserDTO();
-            json.setUid(uid);
+            json = json.convertFromUser(user);
             return new JsonResult<>(json);
         } else {
             return new JsonResult("Invalid username or passcode");

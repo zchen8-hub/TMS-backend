@@ -57,11 +57,17 @@ public class UserDTO {
 
     /**
      * Convert DTO to PO (Persistence object, completely match parameters of user table )
+     *
      * @return PO
      */
-    public User convertToUser(){
+    public User convertToUser() {
         UserDTOConvert userDTOConvert = new UserDTOConvert();
         return userDTOConvert.convert(this);
+    }
+
+    public UserDTO convertFromUser(User user) {
+        UserDTOConvert userDTOConvert = new UserDTOConvert();
+        return userDTOConvert.doBackward(user);
     }
 
     private static class UserDTOConvert extends Converter<UserDTO, User> {
@@ -75,7 +81,9 @@ public class UserDTO {
 
         @Override
         protected UserDTO doBackward(User user) {
-            throw new AssertionError("Reversion is not supported");
+            UserDTO userDTO = new UserDTO();
+            BeanUtils.copyProperties(user, userDTO);
+            return userDTO;
         }
     }
 }

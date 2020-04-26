@@ -44,6 +44,11 @@ public class GroupDTO {
         return groupDTOConvert.convert(this);
     }
 
+    public GroupDTO convertFromGroup(Group group) {
+        GroupDTOConvert groupDTOConvert = new GroupDTOConvert();
+        return groupDTOConvert.doBackward(group);
+    }
+
     private static class GroupDTOConvert extends Converter<GroupDTO, Group> {
 
         @Override
@@ -55,7 +60,9 @@ public class GroupDTO {
 
         @Override
         protected GroupDTO doBackward(Group group) {
-            throw new AssertionError("Reversion is not supported");
+            GroupDTO dto = new GroupDTO();
+            BeanUtils.copyProperties(dto, group);
+            return dto;
         }
     }
 }

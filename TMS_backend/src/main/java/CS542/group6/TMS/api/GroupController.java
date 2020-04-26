@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,9 +24,14 @@ public class GroupController {
     }
 
     @GetMapping("/project/{pid}/groups")
-    public JsonResult<List<Group>> getGroups(@PathVariable String pid) {
+    public JsonResult<List<GroupDTO>> getGroups(@PathVariable String pid) {
         List<Group> groups = groupServices.getGroupsByProjectId(pid);
-        return new JsonResult<>(groups);
+        List<GroupDTO> groupDTOS = new ArrayList<>();
+        GroupDTO dto = new GroupDTO();
+        for (Group group : groups){
+            groupDTOS.add(dto.convertFromGroup(group));
+        }
+        return new JsonResult<>(groupDTOS);
     }
 
     @PostMapping("/project/{pid}/group")
