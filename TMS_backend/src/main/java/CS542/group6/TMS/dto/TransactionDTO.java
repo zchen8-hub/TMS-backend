@@ -4,12 +4,15 @@ import CS542.group6.TMS.model.Transaction;
 import com.google.common.base.Converter;
 import org.springframework.beans.BeanUtils;
 
+import java.util.List;
+
 public class TransactionDTO {
     private String transactionId;
     private String groupId;
     private String creatorId;
     private String title;
     private String description;
+    private List<UserDTO> userDTOS;
 
     public String getCreatorId() {
         return creatorId;
@@ -51,9 +54,22 @@ public class TransactionDTO {
         this.description = description;
     }
 
-    public Transaction convertToTransaction(){
-        TransactionDTOConvert TransactionDTOConvert = new TransactionDTOConvert();
-        return TransactionDTOConvert.convert(this);
+    public List<UserDTO> getUserDTOS() {
+        return userDTOS;
+    }
+
+    public void setUserDTOS(List<UserDTO> userDTOS) {
+        this.userDTOS = userDTOS;
+    }
+
+    public Transaction convertToTransaction() {
+        TransactionDTOConvert transactionDTOConvert = new TransactionDTOConvert();
+        return transactionDTOConvert.convert(this);
+    }
+
+    public TransactionDTO convertFromTransaction(Transaction transaction){
+        TransactionDTOConvert transactionDTOConvert = new TransactionDTOConvert();
+        return transactionDTOConvert.doBackward(transaction);
     }
 
     private static class TransactionDTOConvert extends Converter<TransactionDTO, Transaction> {
@@ -67,7 +83,9 @@ public class TransactionDTO {
 
         @Override
         protected TransactionDTO doBackward(Transaction transaction) {
-            throw new AssertionError("Reversion is not supported");
+            TransactionDTO dto = new TransactionDTO();
+            BeanUtils.copyProperties(transaction, dto);
+            return dto;
         }
     }
 }

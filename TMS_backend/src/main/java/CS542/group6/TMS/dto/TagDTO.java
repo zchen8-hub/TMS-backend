@@ -55,8 +55,9 @@ public class TagDTO {
 
         @Override
         protected TagDTO doBackward(Tag tag) {
-            throw new AssertionError("Reversion is not supported");
+            TagDTO tagDTO = new TagDTO();
+            BeanUtils.copyProperties(tag, tagDTO);
+            return tagDTO;
         }
     }
-
 }

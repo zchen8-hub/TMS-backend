@@ -2,6 +2,7 @@ package CS542.group6.TMS.api;
 
 import CS542.group6.TMS.dto.JsonResult;
 import CS542.group6.TMS.dto.TransactionDTO;
+import CS542.group6.TMS.dto.UserDTO;
 import CS542.group6.TMS.model.Tag;
 import CS542.group6.TMS.model.Transaction;
 import CS542.group6.TMS.model.User;
@@ -9,6 +10,7 @@ import CS542.group6.TMS.service.TransactionServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/api")
@@ -22,9 +24,23 @@ public class TransactionController {
     }
 
     @GetMapping("/group/{gid}/transactions")
-    public JsonResult<List<Transaction>> listTransactions(@PathVariable String gid) {
+    public JsonResult<List<TransactionDTO>> listTransactions(@PathVariable String gid) {
         List<Transaction> transactions = transactionServices.listTransactions(gid);
-        return new JsonResult<>(transactions);
+        List<TransactionDTO> dtos = new ArrayList<>();
+        for (Transaction transaction : transactions) {
+            List<UserDTO> userDTOS = new ArrayList<>();
+            for (User user : transaction.getUserList()){
+                UserDTO userDTO = new UserDTO();
+                userDTO = userDTO.convertFromUser(user);
+                userDTOS.add(userDTO);
+            }
+
+            TransactionDTO dto = new TransactionDTO();
+            dto = dto.convertFromTransaction(transaction);
+            dto.setUserDTOS(userDTOS);
+            dtos.add(dto);
+        }
+        return new JsonResult<>(dtos);
     }
 
     @PostMapping("/group/{gid}/transaction")
@@ -47,7 +63,7 @@ public class TransactionController {
     }
 
     @GetMapping("/transaction/{tid}/users")
-    public List<User> listTransactionUsers(@PathVariable String tid){
+    public List<User> listTransactionUsers(@PathVariable String tid) {
         return transactionServices.listTransactionUsers(tid);
     }
 
@@ -64,7 +80,7 @@ public class TransactionController {
     }
 
     @GetMapping("/transaction/{tid}/tags")
-    public List<Tag> listTags(@PathVariable String tid){
+    public List<Tag> listTags(@PathVariable String tid) {
         return transactionServices.listTags(tid);
     }
 
@@ -75,7 +91,7 @@ public class TransactionController {
     }
 
     @DeleteMapping("/transaction/{tid}/tag/{tagId}")
-    public JsonResult deleteTagFromTransaction(@PathVariable String tid,@PathVariable String tagId){
+    public JsonResult deleteTagFromTransaction(@PathVariable String tid, @PathVariable String tagId) {
         Transaction transaction = transactionServices.deleteTagFromTransaction(tid, tagId);
         return new JsonResult<>(transaction);
     }
