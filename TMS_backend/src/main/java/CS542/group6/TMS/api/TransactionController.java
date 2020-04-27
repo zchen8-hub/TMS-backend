@@ -26,34 +26,29 @@ public class TransactionController {
     @GetMapping("/group/{gid}/transactions")
     public JsonResult<List<TransactionDTO>> listTransactions(@PathVariable String gid) {
         List<Transaction> transactions = transactionServices.listTransactions(gid);
-        List<TransactionDTO> dtos = new ArrayList<>();
-        for (Transaction transaction : transactions) {
-            List<UserDTO> userDTOS = new ArrayList<>();
-            for (User user : transaction.getUserList()){
-                UserDTO userDTO = new UserDTO();
-                userDTO = userDTO.convertFromUser(user);
-                userDTOS.add(userDTO);
-            }
-
-            TransactionDTO dto = new TransactionDTO();
-            dto = dto.convertFromTransaction(transaction);
-            dto.setUserDTOS(userDTOS);
-            dtos.add(dto);
-        }
+        List<TransactionDTO> dtos = buildOutputTransactionDTOs(transactions);
         return new JsonResult<>(dtos);
     }
 
     @PostMapping("/group/{gid}/transaction")
-    public JsonResult<Transaction> addTransaction(@PathVariable String gid, @RequestBody TransactionDTO transactionDTO) {
+    public JsonResult<TransactionDTO> addTransaction(@PathVariable String gid, @RequestBody TransactionDTO transactionDTO) {
         transactionDTO.setGroupId(gid);
         Transaction transaction = transactionServices.addTransaction(transactionDTO.convertToTransaction());
-        return new JsonResult<>(transaction);
+
+        TransactionDTO output = new TransactionDTO();
+        output.convertFromTransaction(transaction);
+        output.setUserDTOS(buildOutputUserDTO(transaction.getUserList()));
+        return new JsonResult<>(output);
     }
 
     @PutMapping("/group/{gid}/transaction/{tid}")
-    public JsonResult<Transaction> updateTransaction(@PathVariable String gid, @PathVariable String tid, @RequestBody TransactionDTO transactionDTO) {
+    public JsonResult<TransactionDTO> updateTransaction(@PathVariable String gid, @PathVariable String tid, @RequestBody TransactionDTO transactionDTO) {
         Transaction transaction = transactionServices.updateTransaction(tid, transactionDTO);
-        return new JsonResult<>(transaction);
+
+        TransactionDTO output = new TransactionDTO();
+        output.convertFromTransaction(transaction);
+        output.setUserDTOS(buildOutputUserDTO(transaction.getUserList()));
+        return new JsonResult<>(output);
     }
 
     @DeleteMapping("/group/{gid}/transaction/{tid}")
@@ -94,5 +89,28 @@ public class TransactionController {
     public JsonResult deleteTagFromTransaction(@PathVariable String tid, @PathVariable String tagId) {
         Transaction transaction = transactionServices.deleteTagFromTransaction(tid, tagId);
         return new JsonResult<>(transaction);
+    }
+
+    private List<TransactionDTO> buildOutputTransactionDTOs(List<Transaction> transactions) {
+        List<TransactionDTO> dtos = new ArrayList<>();
+        for (Transaction transaction : transactions) {
+            List<UserDTO> userDTOS = buildOutputUserDTO(transaction.getUserList());
+
+            TransactionDTO dto = new TransactionDTO();
+            dto = dto.convertFromTransaction(transaction);
+            dto.setUserDTOS(userDTOS);
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
+    private List<UserDTO> buildOutputUserDTO(List<User> users){
+        List<UserDTO> userDTOS = new ArrayList<>();
+        for (User user : users) {
+            UserDTO userDTO = new UserDTO();
+            userDTO = userDTO.convertFromUser(user);
+            userDTOS.add(userDTO);
+        }
+        return userDTOS;
     }
 }

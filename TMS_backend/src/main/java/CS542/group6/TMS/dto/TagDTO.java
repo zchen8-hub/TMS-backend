@@ -44,6 +44,11 @@ public class TagDTO {
         return tagDTOConvert.convert(this);
     }
 
+    public TagDTO convertFromTag(Tag tag) {
+        TagDTOConvert tagDTOConvert = new TagDTOConvert();
+        return tagDTOConvert.doBackward(tag);
+    }
+
     private static class TagDTOConvert extends Converter<TagDTO, Tag> {
 
         @Override

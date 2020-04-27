@@ -15,8 +15,8 @@ public class Group {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Column(name = "group_id", nullable = false,updatable = false)
-    private String  groupId;
+    @Column(name = "group_id", nullable = false, updatable = false)
+    private String groupId;
 
     @Column(name = "project_id", nullable = false, updatable = false)
     private String projectId;

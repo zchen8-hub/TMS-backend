@@ -1,5 +1,6 @@
 package CS542.group6.TMS.service;
 
+import CS542.group6.TMS.model.Group;
 import CS542.group6.TMS.model.InviCode;
 import CS542.group6.TMS.model.Project;
 import CS542.group6.TMS.model.User;
@@ -16,11 +17,13 @@ public class ProjectServices {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
     private final InvitationCodeRepository invitationCodeRepository;
+    private final GroupServices groupServices;
 
-    public ProjectServices(ProjectRepository projectRepository, UserRepository userRepository, InvitationCodeRepository invitationCodeRepository) {
+    public ProjectServices(ProjectRepository projectRepository, UserRepository userRepository, InvitationCodeRepository invitationCodeRepository, GroupServices groupServices) {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
         this.invitationCodeRepository = invitationCodeRepository;
+        this.groupServices = groupServices;
     }
 
     public List<Project> getProjectsByUserId(String uid){
@@ -41,6 +44,21 @@ public class ProjectServices {
         User user = userRepository.getOne(uid);
         user.getProjectList().add(p);
         userRepository.save(user);
+
+        Group todo = new Group();
+        todo.setGroupName("TODO");
+        todo.setProjectId(p.getProjectId());
+        groupServices.createGroup(todo);
+
+        Group inProgress = new Group();
+        inProgress.setGroupName("IN PROGRESS");
+        inProgress.setProjectId(p.getProjectId());
+        groupServices.createGroup(inProgress);
+
+        Group done = new Group();
+        done.setGroupName("DONE");
+        done.setProjectId(p.getProjectId());
+        groupServices.createGroup(done);
         return p;
     }
 
