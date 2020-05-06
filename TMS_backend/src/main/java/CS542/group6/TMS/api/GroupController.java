@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @RequestMapping("/api")
 @RestController
@@ -27,9 +26,11 @@ public class GroupController {
     public JsonResult<List<GroupDTO>> getGroups(@PathVariable String pid) {
         List<Group> groups = groupServices.getGroupsByProjectId(pid);
         List<GroupDTO> groupDTOS = new ArrayList<>();
-        GroupDTO dto = new GroupDTO();
         for (Group group : groups){
-            groupDTOS.add(dto.convertFromGroup(group));
+            GroupDTO dto = new GroupDTO();
+            dto = dto.convertFromGroup(group);
+            dto.setTransactions(TransactionController.buildOutputTransactionDTOs(group.getTransactionList()));
+            groupDTOS.add(dto);
         }
         return new JsonResult<>(groupDTOS);
     }

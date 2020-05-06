@@ -3,12 +3,14 @@ package CS542.group6.TMS.dto;
 import CS542.group6.TMS.model.Group;
 import com.google.common.base.Converter;
 import org.springframework.beans.BeanUtils;
+import java.util.List;
 
 public class GroupDTO {
 
     private String groupId;
     private String groupName;
     private String projectId;
+    private List<TransactionDTO> transactions;
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
@@ -22,7 +24,6 @@ public class GroupDTO {
         this.projectId = projectId;
     }
 
-
     public String getGroupId() {
         return groupId;
     }
@@ -33,6 +34,14 @@ public class GroupDTO {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    public List<TransactionDTO> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<TransactionDTO> transactions) {
+        this.transactions = transactions;
     }
 
     /**
@@ -61,7 +70,7 @@ public class GroupDTO {
         @Override
         protected GroupDTO doBackward(Group group) {
             GroupDTO dto = new GroupDTO();
-            BeanUtils.copyProperties(dto, group);
+            BeanUtils.copyProperties(group, dto);
             return dto;
         }
     }

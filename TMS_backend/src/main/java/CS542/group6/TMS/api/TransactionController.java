@@ -36,8 +36,8 @@ public class TransactionController {
         Transaction transaction = transactionServices.addTransaction(transactionDTO.convertToTransaction());
 
         TransactionDTO output = new TransactionDTO();
-        output.convertFromTransaction(transaction);
-        output.setUserDTOS(buildOutputUserDTO(transaction.getUserList()));
+        output = output.convertFromTransaction(transaction);
+        //output.setUserDTOS(buildOutputUserDTO(transaction.getUserList()));
         return new JsonResult<>(output);
     }
 
@@ -91,7 +91,7 @@ public class TransactionController {
         return new JsonResult<>(transaction);
     }
 
-    private List<TransactionDTO> buildOutputTransactionDTOs(List<Transaction> transactions) {
+    static List<TransactionDTO> buildOutputTransactionDTOs(List<Transaction> transactions) {
         List<TransactionDTO> dtos = new ArrayList<>();
         for (Transaction transaction : transactions) {
             List<UserDTO> userDTOS = buildOutputUserDTO(transaction.getUserList());
@@ -104,7 +104,7 @@ public class TransactionController {
         return dtos;
     }
 
-    private List<UserDTO> buildOutputUserDTO(List<User> users){
+    static List<UserDTO> buildOutputUserDTO(List<User> users){
         List<UserDTO> userDTOS = new ArrayList<>();
         for (User user : users) {
             UserDTO userDTO = new UserDTO();

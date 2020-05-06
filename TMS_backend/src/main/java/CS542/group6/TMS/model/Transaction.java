@@ -85,7 +85,7 @@ public class Transaction {
     }
 
     public String getDescription() {
-        return description;
+        return description == null ? "" : description;
     }
 
     public void setGroupId(String groupId) {
