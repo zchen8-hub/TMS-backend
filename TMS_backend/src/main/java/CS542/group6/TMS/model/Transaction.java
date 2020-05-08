@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,9 +38,11 @@ public class Transaction {
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "transactionList")
-    private List<User> UserList;
+    private List<User> userList;
 
     public Transaction() {
+        tagList = new ArrayList<>();
+        userList = new ArrayList<>();
     }
 
     public Transaction(String transactionId, String groupId, String creatorId, String title, String description, List<Tag> tagList, List<User> userList) {
@@ -49,7 +52,7 @@ public class Transaction {
         this.title = title;
         this.description = description;
         this.tagList = tagList;
-        UserList = userList;
+        this.userList = userList;
     }
 
     public List<Tag> getTagList() {
@@ -61,11 +64,11 @@ public class Transaction {
     }
 
     public List<User> getUserList() {
-        return UserList;
+        return userList;
     }
 
     public void setUserList(List<User> userList) {
-        UserList = userList;
+        this.userList = userList;
     }
 
     public String getTransactionId() {

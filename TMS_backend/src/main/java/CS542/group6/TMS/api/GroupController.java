@@ -44,7 +44,7 @@ public class GroupController {
 
     @PutMapping("/project/{pid}/group/{gid}")
     public JsonResult<Group> updateGroup(@PathVariable("pid") String pid, @PathVariable("gid") String gid, @Valid @RequestBody GroupDTO groupDTO) {
-        Group group = groupServices.updateGroup(pid, gid, groupDTO);
+        Group group = groupServices.updateGroup(gid, groupDTO);
         return new JsonResult<>(group);
     }
 

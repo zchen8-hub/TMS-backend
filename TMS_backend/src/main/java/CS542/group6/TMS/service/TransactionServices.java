@@ -12,6 +12,7 @@ import CS542.group6.TMS.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TransactionServices {
@@ -33,12 +34,17 @@ public class TransactionServices {
     }
 
     public Transaction addTransaction(Transaction transaction) {
+        Optional<User> creator = userRepository.findById(transaction.getCreatorId());
+        if (creator.isPresent()) {
+            transaction.getUserList().add(creator.get());
+            creator.get().getTransactionList().add(transaction);
+        }
         return transactionRepository.save(transaction);
     }
 
-    public Transaction updateTransaction(String tid, TransactionDTO transactionDTO) {
+    public Transaction updateTransaction(String tid, String gid, TransactionDTO transactionDTO) {
         Transaction transaction = transactionRepository.getOne(tid);
-        transaction.setGroupId(transactionDTO.getGroupId());
+        transaction.setGroupId(gid);
         transaction.setDescription(transactionDTO.getDescription());
         transaction.setTitle(transactionDTO.getTitle());
         return transactionRepository.save(transaction);

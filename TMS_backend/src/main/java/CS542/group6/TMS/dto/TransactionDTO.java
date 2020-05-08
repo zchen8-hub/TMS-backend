@@ -12,7 +12,7 @@ public class TransactionDTO {
     private String creatorId;
     private String title;
     private String description;
-    private List<UserDTO> userDTOS;
+    private List<UserDTO> userDTOs;
 
     public String getCreatorId() {
         return creatorId;
@@ -55,11 +55,11 @@ public class TransactionDTO {
     }
 
     public List<UserDTO> getUserDTOS() {
-        return userDTOS;
+        return userDTOs;
     }
 
-    public void setUserDTOS(List<UserDTO> userDTOS) {
-        this.userDTOS = userDTOS;
+    public void setUserDTOS(List<UserDTO> userDTOs) {
+        this.userDTOs = userDTOs;
     }
 
     public Transaction convertToTransaction() {

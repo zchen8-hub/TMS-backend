@@ -2,6 +2,7 @@ package CS542.group6.TMS.model;
 
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -43,7 +44,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "transaction_id"))
     private List<Transaction> transactionList;
 
-    public User(){}
+    public User(){
+        projectList = new ArrayList<>();
+        transactionList = new ArrayList<>();
+    }
 
     public User(String uid, String username, String password, String email, String phone, List<Project> projectList, List<Transaction> transactionList) {
         this.uid = uid;

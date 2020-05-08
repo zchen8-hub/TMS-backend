@@ -37,16 +37,16 @@ public class TransactionController {
 
         TransactionDTO output = new TransactionDTO();
         output = output.convertFromTransaction(transaction);
-        //output.setUserDTOS(buildOutputUserDTO(transaction.getUserList()));
+        output.setUserDTOS(buildOutputUserDTO(transaction.getUserList()));
         return new JsonResult<>(output);
     }
 
     @PutMapping("/group/{gid}/transaction/{tid}")
     public JsonResult<TransactionDTO> updateTransaction(@PathVariable String gid, @PathVariable String tid, @RequestBody TransactionDTO transactionDTO) {
-        Transaction transaction = transactionServices.updateTransaction(tid, transactionDTO);
+        Transaction transaction = transactionServices.updateTransaction(tid, gid, transactionDTO);
 
         TransactionDTO output = new TransactionDTO();
-        output.convertFromTransaction(transaction);
+        output = output.convertFromTransaction(transaction);
         output.setUserDTOS(buildOutputUserDTO(transaction.getUserList()));
         return new JsonResult<>(output);
     }
@@ -94,23 +94,23 @@ public class TransactionController {
     static List<TransactionDTO> buildOutputTransactionDTOs(List<Transaction> transactions) {
         List<TransactionDTO> dtos = new ArrayList<>();
         for (Transaction transaction : transactions) {
-            List<UserDTO> userDTOS = buildOutputUserDTO(transaction.getUserList());
+            List<UserDTO> userDTOs = buildOutputUserDTO(transaction.getUserList());
 
             TransactionDTO dto = new TransactionDTO();
             dto = dto.convertFromTransaction(transaction);
-            dto.setUserDTOS(userDTOS);
+            dto.setUserDTOS(userDTOs);
             dtos.add(dto);
         }
         return dtos;
     }
 
     static List<UserDTO> buildOutputUserDTO(List<User> users){
-        List<UserDTO> userDTOS = new ArrayList<>();
+        List<UserDTO> userDTOs = new ArrayList<>();
         for (User user : users) {
             UserDTO userDTO = new UserDTO();
             userDTO = userDTO.convertFromUser(user);
-            userDTOS.add(userDTO);
+            userDTOs.add(userDTO);
         }
-        return userDTOS;
+        return userDTOs;
     }
 }
