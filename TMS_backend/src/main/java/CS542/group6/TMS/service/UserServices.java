@@ -45,9 +45,10 @@ public class UserServices {
         InviCode inviCode = invitationCodeRepository.findByCodeString(code);
         if (inviCode != null) {
             User user = userRepository.getOne(uid);
-            Project project = projectRepository.getOne(inviCode.getProjectId());
+            Project project = projectRepository.findById(inviCode.getProjectId()).get();
             if (project.getUserList().contains(user) || uid.equals(inviCode.getInviterId()))
                 return project;
+            project.getUserList().add(user);
             user.getProjectList().add(project);
             userRepository.save(user);
             return project;   //Success
@@ -58,5 +59,10 @@ public class UserServices {
     public User findUserById(String uid) {
         Optional<User> user = userRepository.findById(uid);
         return user.orElse(null);
+    }
+
+    public String findUserNameById(String uid) {
+        Optional<User> user = userRepository.findById(uid);
+        return user.map(User::getUsername).orElse(null);
     }
 }

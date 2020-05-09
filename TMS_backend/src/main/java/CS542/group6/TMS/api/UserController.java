@@ -55,6 +55,10 @@ public class UserController {
         projectDTO.setProjectId(result.getProjectId());
         projectDTO.setProjectName(result.getProjectName());
         projectDTO.setCreaterId(result.getCreaterId());
+        projectDTO.setCreatorName(userServices.findUserNameById(result.getCreaterId()));
+        projectDTO.setGroupDTOS(
+                GroupController.assembleGroupDTO(result.getGroupList())
+        );
         return new JsonResult<>(projectDTO);
     }
 }
