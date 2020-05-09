@@ -63,9 +63,12 @@ public class TransactionController {
     }
 
     @PostMapping("/transaction/{tid}/user/{uid}")
-    public JsonResult<User> addUserToTransaction(@PathVariable String tid, @PathVariable String uid) {
-        User user = transactionServices.addUserToTransaction(tid, uid);
-        return new JsonResult<>(user);
+    public JsonResult<TransactionDTO> addUserToTransaction(@PathVariable String tid, @PathVariable String uid) {
+        Transaction transaction = transactionServices.addUserToTransaction(tid, uid);
+        TransactionDTO dto = new TransactionDTO();
+        dto = dto.convertFromTransaction(transaction);
+        dto.setUserDTOS(buildOutputUserDTO(transaction.getUserList()));
+        return new JsonResult<>(dto);
     }
 
     @DeleteMapping("/transaction/{tid}/user/{uid}")

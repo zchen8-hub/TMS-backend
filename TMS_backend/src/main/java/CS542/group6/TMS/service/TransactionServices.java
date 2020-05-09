@@ -55,11 +55,17 @@ public class TransactionServices {
         return "success";
     }
 
-    public User addUserToTransaction(String tid, String uid) {
-        Transaction transaction = transactionRepository.getOne(tid);
+    public Transaction addUserToTransaction(String tid, String uid) {
+        Optional<Transaction> transaction = transactionRepository.findById(tid);
         User user = userRepository.getOne(uid);
-        user.getTransactionList().add(transaction);
-        return userRepository.save(user);
+        if (transaction.isPresent()){
+            Transaction transaction1 = transaction.get();
+            transaction1.getUserList().add(user);
+            user.getTransactionList().add(transaction1);
+            userRepository.save(user);
+            return transaction1;
+        }
+        return null;
     }
 
     public User deleteUserFromTransaction(String tid, String uid) {
