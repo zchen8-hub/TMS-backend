@@ -25,14 +25,15 @@ public class GroupController {
     @GetMapping("/project/{pid}/groups")
     public JsonResult<List<GroupDTO>> getGroups(@PathVariable String pid) {
         List<Group> groups = groupServices.getGroupsByProjectId(pid);
-        List<GroupDTO> groupDTOS = new ArrayList<>();
-        for (Group group : groups){
-            GroupDTO dto = new GroupDTO();
-            dto = dto.convertFromGroup(group);
-            dto.setTransactions(TransactionController.buildOutputTransactionDTOs(group.getTransactionList()));
-            groupDTOS.add(dto);
-        }
-        return new JsonResult<>(groupDTOS);
+        List<GroupDTO> groupDTOs = assembleGroupDTO(groups);
+//        List<GroupDTO> groupDTOS = new ArrayList<>();
+//        for (Group group : groups){
+//            GroupDTO dto = new GroupDTO();
+//            dto = dto.convertFromGroup(group);
+//            dto.setTransactions(TransactionController.buildOutputTransactionDTOs(group.getTransactionList()));
+//            groupDTOS.add(dto);
+//        }
+        return new JsonResult<>(groupDTOs);
     }
 
     @PostMapping("/project/{pid}/group")
@@ -52,5 +53,16 @@ public class GroupController {
     public JsonResult deleteGroup(@PathVariable("pid") String pid, @PathVariable("gid") String gid) {
         String msg = groupServices.deleteGroup(gid);
         return new JsonResult(msg);
+    }
+
+    static List<GroupDTO> assembleGroupDTO(List<Group> groups){
+        List<GroupDTO> groupDTOS = new ArrayList<>();
+        for (Group group : groups){
+            GroupDTO dto = new GroupDTO();
+            dto = dto.convertFromGroup(group);
+            dto.setTransactions(TransactionController.buildOutputTransactionDTOs(group.getTransactionList()));
+            groupDTOS.add(dto);
+        }
+        return groupDTOS;
     }
 }
