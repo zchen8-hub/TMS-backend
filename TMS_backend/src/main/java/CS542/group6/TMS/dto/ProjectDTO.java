@@ -12,6 +12,7 @@ public class ProjectDTO {
     private String createrId;
     private String creatorName;
     private List<GroupDTO> groupDTOS;
+    private List<UserDTO> userDTOs;
 
     public String getProjectId() {
         return projectId;
@@ -61,6 +62,14 @@ public class ProjectDTO {
 
     public void setGroupDTOS(List<GroupDTO> groupDTOS) {
         this.groupDTOS = groupDTOS;
+    }
+
+    public List<UserDTO> getUserDTOs() {
+        return userDTOs;
+    }
+
+    public void setUserDTOs(List<UserDTO> userDTOs) {
+        this.userDTOs = userDTOs;
     }
 
     private static class ProjectDTOConvert extends Converter<ProjectDTO, Project> {

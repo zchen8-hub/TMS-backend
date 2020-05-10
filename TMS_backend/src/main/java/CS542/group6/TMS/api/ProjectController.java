@@ -42,7 +42,13 @@ public class ProjectController {
     @GetMapping("/user/{uid}/project/{pid}")
     public JsonResult<ProjectDTO> getProject(@PathVariable String uid, @PathVariable String pid) {
         Project project = projectServices.getProjectById(pid);
-        ProjectDTO
+        User user = userServices.findUserById(project.getCreaterId());
+        ProjectDTO dto = new ProjectDTO();
+        dto = dto.convertFromProject(project);
+        dto.setCreatorName(user.getUsername());
+        dto.setGroupDTOS(GroupController.assembleGroupDTO(project.getGroupList()));
+        dto.setUserDTOs(UserController.assembleUserDTOs(project.getUserList()));
+        return new JsonResult<>(dto);
     }
 
     @PostMapping("/user/{uid}/project")

@@ -28,7 +28,8 @@ public class ProjectServices {
     }
 
     public List<Project> getProjectsByUserId(String uid){
-        return userRepository.getOne(uid).getProjectList();
+        Optional<User> user = userRepository.findById(uid);
+        return user.map(User::getProjectList).orElse(null);
     }
 
     public Project getProjectById(String pid) {

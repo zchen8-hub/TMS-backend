@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequestMapping("/api")
 @RestController
@@ -60,5 +62,16 @@ public class UserController {
                 GroupController.assembleGroupDTO(result.getGroupList())
         );
         return new JsonResult<>(projectDTO);
+    }
+
+    static List<UserDTO> assembleUserDTOs(List<User> users) {
+        List<UserDTO> dtos = new ArrayList<>();
+        for (User user : users) {
+            UserDTO dto = new UserDTO();
+            dto.setUid(user.getUid());
+            dto.setUsername(user.getUsername());
+            dtos.add(dto);
+        }
+        return dtos;
     }
 }
