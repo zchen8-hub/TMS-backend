@@ -39,6 +39,12 @@ public class ProjectController {
         return new JsonResult<>(dtos);
     }
 
+    @GetMapping("/user/{uid}/project/{pid}")
+    public JsonResult<ProjectDTO> getProject(@PathVariable String uid, @PathVariable String pid) {
+        Project project = projectServices.getProjectById(pid);
+        ProjectDTO
+    }
+
     @PostMapping("/user/{uid}/project")
     public JsonResult<Project> createProject(@PathVariable String uid, @Valid @RequestBody ProjectDTO projectDTO) {
         projectDTO.setCreaterId(uid);

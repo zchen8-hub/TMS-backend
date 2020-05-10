@@ -11,6 +11,7 @@ import CS542.group6.TMS.util.Util;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProjectServices {
@@ -28,6 +29,11 @@ public class ProjectServices {
 
     public List<Project> getProjectsByUserId(String uid){
         return userRepository.getOne(uid).getProjectList();
+    }
+
+    public Project getProjectById(String pid) {
+        Optional<Project> project = projectRepository.findById(pid);
+        return project.orElse(null);
     }
 
     public Project listProjects(String uid, String pid){
