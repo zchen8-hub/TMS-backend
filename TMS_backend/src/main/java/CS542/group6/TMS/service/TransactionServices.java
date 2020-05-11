@@ -82,10 +82,18 @@ public class TransactionServices {
     }
 
     public Transaction addTagToTransaction(String tid, String tagId) {
-        Transaction transaction = transactionRepository.getOne(tid);
-        Tag tag = tagRepository.getOne(tagId);
-        transaction.getTagList().remove(tag);
-        return transactionRepository.save(transaction);
+        Optional<Transaction> transaction = transactionRepository.findById(tid);
+        Optional<Tag> tag = tagRepository.findById(tagId);
+        if (tag.isPresent() && transaction.isPresent()) {
+            Transaction transaction1 = transaction.get();
+            Tag tag1 = tag.get();
+            transaction1.getTagList().add(tag.get());
+            tag1.getTransactionList().add(transaction1);
+            tagRepository.save(tag1);
+            //transactionRepository.save(transaction1);
+            return transaction1;
+        }
+        return null;
     }
 
     public Transaction deleteTagFromTransaction(String tid, String tagId) {

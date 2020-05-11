@@ -31,22 +31,30 @@ public class TagController {
     }
 
     @PostMapping("user/{uid}/project/{pid}/tag")
-    public JsonResult<Tag> createTag(@PathVariable("uid") String uid, @PathVariable("pid") String pid, @Valid @RequestBody TagDTO tagDTO) {
+    public JsonResult<TagDTO> createTag(@PathVariable("uid") String uid, @PathVariable("pid") String pid, @Valid @RequestBody TagDTO tagDTO) {
         tagDTO.setTagId(UUID.randomUUID().toString());
         tagDTO.setProjectId(pid);
         Tag tag = tagServices.createTag(uid, pid, tagDTO.convertToTag());
-        return new JsonResult<>(tag);
+        TagDTO dto = new TagDTO();
+        dto.setProjectId(tag.getProjectId());
+        dto.setTagName(tag.getTagName());
+        dto.setTagId(tag.getTagId());
+        return new JsonResult<>(dto);
     }
 
-    @PutMapping("user/{uid}/project/{pid}/tag/{tid}")
-    public JsonResult<Tag> updateTag(@PathVariable("uid") String uid, @PathVariable("pid") String pid, @PathVariable("tid") String tid, @Valid @RequestBody TagDTO tagDTO) {
+    @PutMapping("user/{uid}/project/{pid}/tag/{tagId}")
+    public JsonResult<TagDTO> updateTag(@PathVariable("uid") String uid, @PathVariable("pid") String pid, @PathVariable("tagId") String tid, @Valid @RequestBody TagDTO tagDTO) {
         Tag tag = tagServices.updateTag(uid, pid, tid, tagDTO.convertToTag());
-        return new JsonResult<>(tag);
+        TagDTO dto = new TagDTO();
+        dto.setProjectId(tag.getProjectId());
+        dto.setTagName(tag.getTagName());
+        dto.setTagId(tag.getTagId());
+        return new JsonResult<>(dto);
     }
 
     @DeleteMapping("user/{uid}/project/{pid}/tag/{tid}")
     public JsonResult deleteTag(@PathVariable("uid") String uid, @PathVariable("pid") String pid, @PathVariable("tid") String tid) {
-        String msg = (tagServices.deleteTag(uid, pid, tid));
+        String msg = tagServices.deleteTag(uid, pid, tid);
         return new JsonResult(msg);
     }
 

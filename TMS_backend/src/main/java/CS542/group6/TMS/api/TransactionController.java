@@ -87,9 +87,12 @@ public class TransactionController {
     }
 
     @PostMapping("/transaction/{tid}/tag/{tagId}")
-    public JsonResult<Transaction> addTagToTransaction(@PathVariable String tid, @PathVariable String tagId) {
+    public JsonResult<TransactionDTO> addTagToTransaction(@PathVariable String tid, @PathVariable String tagId) {
         Transaction transaction = transactionServices.addTagToTransaction(tid, tagId);
-        return new JsonResult<>(transaction);
+        TransactionDTO dto = new TransactionDTO();
+        dto = dto.convertFromTransaction(transaction);
+        dto.setTagDTOs(TagController.assembleTagDTOs(transaction.getTagList()));
+        return new JsonResult<>(dto);
     }
 
     @DeleteMapping("/transaction/{tid}/tag/{tagId}")
