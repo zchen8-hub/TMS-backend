@@ -38,6 +38,7 @@ public class TransactionController {
 
         TransactionDTO output = new TransactionDTO();
         output = output.convertFromTransaction(transaction);
+        output.setTagDTOs(new ArrayList<>());
         output.setUserDTOs(buildOutputUserDTO(transaction.getUserList()));
         return new JsonResult<>(output);
     }
