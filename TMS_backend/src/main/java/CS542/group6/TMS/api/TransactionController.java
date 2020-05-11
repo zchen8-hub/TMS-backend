@@ -1,6 +1,7 @@
 package CS542.group6.TMS.api;
 
 import CS542.group6.TMS.dto.JsonResult;
+import CS542.group6.TMS.dto.TagDTO;
 import CS542.group6.TMS.dto.TransactionDTO;
 import CS542.group6.TMS.dto.UserDTO;
 import CS542.group6.TMS.model.Tag;
@@ -37,7 +38,7 @@ public class TransactionController {
 
         TransactionDTO output = new TransactionDTO();
         output = output.convertFromTransaction(transaction);
-        output.setUserDTOS(buildOutputUserDTO(transaction.getUserList()));
+        output.setUserDTOs(buildOutputUserDTO(transaction.getUserList()));
         return new JsonResult<>(output);
     }
 
@@ -47,7 +48,7 @@ public class TransactionController {
 
         TransactionDTO output = new TransactionDTO();
         output = output.convertFromTransaction(transaction);
-        output.setUserDTOS(buildOutputUserDTO(transaction.getUserList()));
+        output.setUserDTOs(buildOutputUserDTO(transaction.getUserList()));
         return new JsonResult<>(output);
     }
 
@@ -67,7 +68,7 @@ public class TransactionController {
         Transaction transaction = transactionServices.addUserToTransaction(tid, uid);
         TransactionDTO dto = new TransactionDTO();
         dto = dto.convertFromTransaction(transaction);
-        dto.setUserDTOS(buildOutputUserDTO(transaction.getUserList()));
+        dto.setUserDTOs(buildOutputUserDTO(transaction.getUserList()));
         return new JsonResult<>(dto);
     }
 
@@ -76,7 +77,7 @@ public class TransactionController {
         Transaction transaction = transactionServices.deleteUserFromTransaction(tid, uid);
         TransactionDTO dto = new TransactionDTO();
         dto = dto.convertFromTransaction(transaction);
-        dto.setUserDTOS(buildOutputUserDTO(transaction.getUserList()));
+        dto.setUserDTOs(buildOutputUserDTO(transaction.getUserList()));
         return new JsonResult<>(dto);
     }
 
@@ -101,10 +102,11 @@ public class TransactionController {
         List<TransactionDTO> dtos = new ArrayList<>();
         for (Transaction transaction : transactions) {
             List<UserDTO> userDTOs = buildOutputUserDTO(transaction.getUserList());
-
+            List<TagDTO> tagDTOs = TagController.assembleTagDTOs(transaction.getTagList());
             TransactionDTO dto = new TransactionDTO();
             dto = dto.convertFromTransaction(transaction);
-            dto.setUserDTOS(userDTOs);
+            dto.setUserDTOs(userDTOs);
+            dto.setTagDTOs(tagDTOs);
             dtos.add(dto);
         }
         return dtos;

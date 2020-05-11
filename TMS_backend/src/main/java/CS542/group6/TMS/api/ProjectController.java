@@ -52,15 +52,20 @@ public class ProjectController {
     }
 
     @PostMapping("/user/{uid}/project")
-    public JsonResult<Project> createProject(@PathVariable String uid, @Valid @RequestBody ProjectDTO projectDTO) {
+    public JsonResult<ProjectDTO> createProject(@PathVariable String uid, @Valid @RequestBody ProjectDTO projectDTO) {
         projectDTO.setCreaterId(uid);
+        User user = userServices.findUserById(uid);
         Project project = projectServices.createProject(projectDTO.convertToProject(), uid);
-        return new JsonResult<>(project);
+        ProjectDTO dto = assembleProjectDTO(project, user);
+        return new JsonResult<>(dto);
     }
 
     @DeleteMapping("/user/{uid}/project/{pid}")
     public JsonResult deleteProject(@PathVariable String uid, @PathVariable String pid) {
         String msg = projectServices.deleteProject(uid, pid);
+        if (msg == null){
+            return new JsonResult("500", "Failed");
+        }
         return new JsonResult(msg);
     }
 
@@ -68,5 +73,16 @@ public class ProjectController {
     public JsonResult<String> generateInvitationCode(@PathVariable String uid, @PathVariable String pid) {
         String code = projectServices.generateInvitationCode(uid, pid);
         return new JsonResult<>(code);
+    }
+
+    static ProjectDTO assembleProjectDTO(Project project, User user){
+        ProjectDTO dto = new ProjectDTO();
+        dto = dto.convertFromProject(project);
+        dto.setCreatorName(user.getUsername());
+        if (!project.getGroupList().isEmpty())
+            dto.setGroupDTOS(GroupController.assembleGroupDTO(project.getGroupList()));
+        if (!project.getUserList().isEmpty())
+            dto.setUserDTOs(UserController.assembleUserDTOs(project.getUserList()));
+        return dto;
     }
 }

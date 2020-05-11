@@ -66,15 +66,23 @@ public class ProjectServices {
         done.setGroupName("DONE");
         done.setProjectId(p.getProjectId());
         groupServices.createGroup(done);
+
+        p.getGroupList().add(todo);
+        p.getGroupList().add(inProgress);
+        p.getGroupList().add(done);
         return p;
     }
 
     public String deleteProject(String uid, String pid){
-        Project project = projectRepository.getOne(pid);
-        if (!project.getCreaterId().equals(uid))
-            return "Permission denied";
-        projectRepository.deleteById(pid);
-        return "Success";
+        Optional<Project> project = projectRepository.findById(pid);
+        if (project.isPresent()){
+            if (!project.get().getCreaterId().equals(uid))
+                return "Permission denied";
+            projectRepository.deleteProjectByProjectId(pid);
+            //projectRepository.deleteById(pid);
+            return "Success";
+        }
+        return null;
     }
 
     public String generateInvitationCode(String uid, String pid){

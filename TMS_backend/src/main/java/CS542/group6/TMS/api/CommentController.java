@@ -27,7 +27,7 @@ public class CommentController {
     }
 
     @PostMapping("/user/{uid}/transaction/{tid}/comment")
-    public JsonResult<Comment> createComment(@PathVariable("uid") String uid, @PathVariable("tid") String tid, @Valid @RequestBody CommentDTO commentDTO) {
+    public JsonResult<Comment> addComment(@PathVariable("uid") String uid, @PathVariable("tid") String tid, @Valid @RequestBody CommentDTO commentDTO) {
         commentDTO.setTransactionId(tid);
         commentDTO.setCreaterId(uid);
         Comment comment = commentServices.createComment(commentDTO.convertToComment());

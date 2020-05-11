@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,9 +24,10 @@ public class TagController {
     }
 
     @GetMapping("/project/{pid}/tags")
-    public JsonResult<List<Tag>> getTags(@PathVariable String pid) {
+    public JsonResult<List<TagDTO>> getTags(@PathVariable String pid) {
         List<Tag> tags = tagServices.getTagsByProjectId(pid);
-        return new JsonResult<>(tags);
+        List<TagDTO> dtos = assembleTagDTOs(tags);
+        return new JsonResult<>(dtos);
     }
 
     @PostMapping("user/{uid}/project/{pid}/tag")
@@ -46,5 +48,17 @@ public class TagController {
     public JsonResult deleteTag(@PathVariable("uid") String uid, @PathVariable("pid") String pid, @PathVariable("tid") String tid) {
         String msg = (tagServices.deleteTag(uid, pid, tid));
         return new JsonResult(msg);
+    }
+
+    static List<TagDTO> assembleTagDTOs(List<Tag> tagList) {
+        List<TagDTO> dtos = new ArrayList<>();
+        for (Tag tag : tagList) {
+            TagDTO dto = new TagDTO();
+            dto.setTagId(tag.getTagId());
+            dto.setTagName(tag.getTagName());
+            dto.setProjectId(tag.getProjectId());
+            dtos.add(dto);
+        }
+        return dtos;
     }
 }

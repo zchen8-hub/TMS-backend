@@ -6,11 +6,19 @@ import com.google.common.base.Converter;
 import org.springframework.beans.BeanUtils;
 
 public class CommentDTO {
-
+    private String commentId;
     private String createrId;
     private String comment;
-    private String supercid;
     private String transactionId;
+    private String supercid;
+
+    public String getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
+    }
 
     public String getCreaterId() {
         return createrId;

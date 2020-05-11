@@ -13,6 +13,7 @@ public class TransactionDTO {
     private String title;
     private String description;
     private List<UserDTO> userDTOs;
+    private List<TagDTO> tagDTOs;
 
     public String getCreatorId() {
         return creatorId;
@@ -54,12 +55,20 @@ public class TransactionDTO {
         this.description = description;
     }
 
-    public List<UserDTO> getUserDTOS() {
+    public List<UserDTO> getUserDTOs() {
         return userDTOs;
     }
 
-    public void setUserDTOS(List<UserDTO> userDTOs) {
+    public void setUserDTOs(List<UserDTO> userDTOs) {
         this.userDTOs = userDTOs;
+    }
+
+    public List<TagDTO> getTagDTOs() {
+        return tagDTOs;
+    }
+
+    public void setTagDTOs(List<TagDTO> tagDTOs) {
+        this.tagDTOs = tagDTOs;
     }
 
     public Transaction convertToTransaction() {
